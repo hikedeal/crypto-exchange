@@ -509,7 +509,7 @@ export default function LandingPage() {
             <p className="text-muted-foreground">{t("FAQ.subtitle")}</p>
           </div>
           
-          <Accordion type="single" collapsible className="w-full space-y-4">
+          <Accordion {...({ type: "single", collapsible: true } as any)} className="w-full space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-white/5 bg-white/[0.02] rounded-xl px-6">
                 <AccordionTrigger className="text-white hover:text-primary transition-colors py-6 text-left">{t(`FAQ.q${i}`)}</AccordionTrigger>
