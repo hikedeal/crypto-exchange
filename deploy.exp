@@ -1,0 +1,33 @@
+#!/usr/bin/expect -f
+set timeout 600
+set password "Hiikedeal@2026"
+
+spawn ssh -o StrictHostKeyChecking=no root@187.127.132.10
+
+expect {
+  "password:" {
+    send "$password\r"
+  }
+}
+
+expect -re {[$#] }
+
+# Stash local changes and pull
+send "cd /root/crypto-exchange && git stash && git pull origin main\r"
+expect -re {[$#] }
+
+# Install deps
+send "npm install --legacy-peer-deps 2>&1 | tail -5\r"
+expect -re {[$#] }
+
+# Build
+send "npm run build 2>&1 | tail -20\r"
+set timeout 600
+expect -re {[$#] }
+
+# Restart PM2
+send "pm2 restart crypto-exchange && pm2 list\r"
+expect -re {[$#] }
+
+send "exit\r"
+expect eof

@@ -1,0 +1,152 @@
+{
+  "Hero": {
+    "title": "Intercambia Cripto con Cero Límites.",
+    "subtitle": "El intercambio de criptomonedas Peer-to-Peer más avanzado del mundo. Compra y vende BTC, ETH y USDT con más de 300 métodos de pago de forma segura.",
+    "cta_start": "Empieza a Operar",
+    "cta_offers": "Ver Ofertas",
+    "volume_badge": "Más de $2 mil millones de volumen trimestral"
+  },
+  "Navbar": {
+    "features": "Características",
+    "p2p": "Comercio P2P",
+    "market": "Mercado",
+    "security": "Seguridad",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse"
+  },
+  "Stats": {
+    "users": "Usuarios Registrados",
+    "volume": "Volumen Mensual",
+    "countries": "Países Soportados",
+    "payments": "Métodos de Pago"
+  },
+  "Features": {
+    "title": "¿Por qué elegir CryptoP2P?",
+    "subtitle": "Creamos la plataforma definitiva combinando la estética web3 con la fiabilidad fintech.",
+    "fast_title": "Rápido como el Rayo",
+    "fast_desc": "Ejecuta operaciones al instante con nuestro motor de emparejamiento. El depósito en garantía libera fondos automáticamente tras la confirmación del pago.",
+    "secure_title": "Depósito Seguro",
+    "secure_desc": "Tus criptomonedas se guardan de forma segura en nuestro depósito de contrato inteligente hasta que ambas partes confirman la transacción.",
+    "global_title": "Alcance Global",
+    "global_desc": "Opera sin problemas en más de 150 países. Soportando monedas locales y cientos de métodos de pago."
+  },
+  "About": {
+    "title": "¿Qué es el comercio <span>Cripto P2P?</span>",
+    "desc": "El comercio peer-to-peer permite a los usuarios comprar y vender cripto directamente entre sí usando protección de depósito en garantía. Elimina intermediarios.",
+    "escrow_title": "Depósito Seguro",
+    "escrow_desc": "Los fondos se bloquean en el depósito hasta que se completa la operación.",
+    "direct_title": "Comercio Directo",
+    "direct_desc": "Opera directamente con comerciantes verificados y pares.",
+    "payments_title": "Múltiples Métodos",
+    "payments_desc": "Banco, E-Wallets, Efectivo y más de 300 más.",
+    "seller_label": "Vendedor",
+    "completion_label": "Finalización",
+    "escrow_active": "Sistema de Depósito Activo",
+    "escrow_locked": "Cripto bloqueada en contrato inteligente",
+    "confirm_btn": "Confirmar Pago Recibido"
+  },
+  "Market": {
+    "title": "Vista General del <span>Mercado</span>",
+    "subtitle": "Datos en tiempo real de los activos más negociados en nuestra plataforma.",
+    "usdt_tab": "Mercados USDT",
+    "btc_tab": "Mercados BTC",
+    "asset": "Activo",
+    "price": "Último Precio",
+    "change": "Cambio 24h",
+    "volume": "Cap. de Mercado / Vol",
+    "action": "Acción",
+    "trade_now": "Operar Ahora"
+  },
+  "P2P": {
+    "title": "Opera con más de 300 <span>Métodos de Pago</span>",
+    "subtitle": "Desde transferencias bancarias hasta billeteras electrónicas, elige exactamente cómo quieres pagar o cobrar. Sin comisiones para creadores.",
+    "explore": "Explorar todos los métodos",
+    "buy_usdt": "Comprar USDT",
+    "amount": "Cantidad",
+    "escrow_protected": "Protección de Depósito",
+    "safe_trades": "Trades 100% seguros"
+  },
+  "Testimonials": {
+    "title": "Reseñas de Usuarios <span>Verificados</span>",
+    "user1_name": "Juan",
+    "user1_country": "España",
+    "user1_review": "La experiencia P2P más rápida. ¡5 minutos desde la transferencia hasta tener USDT!",
+    "user2_name": "Amit",
+    "user2_country": "India",
+    "user2_review": "La protección de depósito es real. Opero grandes volúmenes con total tranquilidad.",
+    "user3_name": "Chen",
+    "user3_country": "China",
+    "user3_review": "Mejores tasas para ETH/USDT. La interfaz está a años luz de otras.",
+    "user4_name": "Ali",
+    "user4_country": "EAU",
+    "user4_review": "Gran soporte. Resolvieron un problema con un comerciante en 30 minutos.",
+    "user5_name": "Maria",
+    "user5_country": "Brasil",
+    "user5_review": "Me encanta el diseño. Muy fácil de usar en móvil y escritorio."
+  },
+  "FAQ": {
+    "title": "Preguntas <span>Frecuentes</span>",
+    "subtitle": "Todo lo que necesitas saber sobre operar en CryptoP2P.",
+    "q1": "¿Es seguro el comercio P2P?",
+    "a1": "Sí, nuestro sistema de depósito y la verificación de comerciantes garantizan alta seguridad.",
+    "q2": "¿Cómo funciona el depósito?",
+    "a2": "La cripto del vendedor se bloquea en un contrato. Al pagar y confirmar, se libera al comprador.",
+    "q3": "¿Qué métodos de pago aceptan?",
+    "a3": "Más de 300 métodos: Banco, SEPA, PayPal, Wise, Zelle y billeteras locales.",
+    "q4": "¿Hay comisiones?",
+    "a4": "0.0% para creadores de anuncios. Los tomadores pagan una pequeña comisión según la moneda.",
+    "q5": "¿Cuánto tarda una operación?",
+    "a5": "Normalmente menos de 15 minutos, según el método de pago."
+  },
+  "Partners": {
+    "title": "Confiado por Líderes Globales"
+  },
+  "CTA": {
+    "title": "¿Listo para empezar a operar?",
+    "subtitle": "Únete a millones de usuarios en la plataforma P2P más premium del mundo.",
+    "btn": "Crear Cuenta Gratis"
+  },
+  "Footer": {
+    "desc": "Construyendo el futuro del comercio peer-to-peer descentralizado.",
+    "platform": "Plataforma",
+    "support": "Soporte",
+    "legal": "Legal",
+    "products": "Productos",
+    "spot": "Trading Spot",
+    "earn": "Crypto Earn",
+    "institutional": "Institucional",
+    "launchpad": "Launchpad",
+    "p2p": "Comercio P2P",
+    "wallet": "Billetera",
+    "vip": "Programa VIP",
+    "help": "Centro de Ayuda",
+    "ticket": "Enviar Ticket",
+    "fees": "Comisiones",
+    "terms": "Términos de Servicio",
+    "privacy": "Política de Privacidad",
+    "kyc": "Política KYC/AML",
+    "rights": "Todos los derechos reservados."
+  },
+  "MegaMenu": {
+    "products": "Productos",
+    "spot_title": "Trading Spot",
+    "spot_desc": "Para el inversor a largo plazo",
+    "futures_title": "Trading de Futuros",
+    "futures_desc": "Para el planificador estratégico",
+    "p2p_title": "Trading P2P",
+    "p2p_desc": "Para el negociador directo",
+    "margin_title": "Trading de Margen",
+    "margin_desc": "Para el optimizador tolerante al riesgo",
+    "bot_title": "Trading de Bots o Algorítmico",
+    "bot_desc": "Para el profesional basado en datos",
+    "arbitrage_title": "Trading de Arbitraje",
+    "arbitrage_desc": "Para el oportunista astuto"
+  },
+  "Common": {
+    "total_balance": "Balance Total",
+    "trade_now": "Operar Ahora",
+    "usdt": "USDT",
+    "dir": "ltr",
+    "buy": "Comprar"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "Hero": {
+    "title": "Trade Crypto with Zero Boundaries.",
+    "subtitle": "The world's most advanced Peer-to-Peer crypto exchange. Buy and sell BTC, ETH, and USDT with 300+ payment methods securely.",
+    "cta_start": "Start Trading Now",
+    "cta_offers": "View Offers",
+    "volume_badge": "Over $2 Billion in Quarterly Volume"
+  },
+  "Navbar": {
+    "features": "Features",
+    "p2p": "P2P Trading",
+    "market": "Market",
+    "security": "Security",
+    "login": "Log In",
+    "signup": "Sign Up"
+  },
+  "Stats": {
+    "users": "Registered Users",
+    "volume": "Monthly Volume",
+    "countries": "Countries Supported",
+    "payments": "Payment Methods"
+  },
+  "Features": {
+    "title": "Why Choose CryptoP2P?",
+    "subtitle": "We built the ultimate platform blending web3 aesthetics with fintech reliability.",
+    "fast_title": "Lightning Fast",
+    "fast_desc": "Execute trades instantly with our matching engine. Escrow automatically releases funds upon payment confirmation.",
+    "secure_title": "Secure Escrow",
+    "secure_desc": "Your crypto is held safely in our smart contract escrow until both parties confirm the transaction.",
+    "global_title": "Global Reach",
+    "global_desc": "Trade seamlessly across 150+ countries. Supporting local currencies and hundreds of payment methods."
+  },
+  "About": {
+    "title": "What is <span>P2P Crypto Trading?</span>",
+    "desc": "Peer-to-peer trading allows users to buy and sell crypto directly with each other using escrow protection. It eliminates intermediaries, giving you more control over your trades and payment methods.",
+    "escrow_title": "Secure Escrow",
+    "escrow_desc": "Funds are locked in escrow until the trade is completed.",
+    "direct_title": "Direct User Trading",
+    "direct_desc": "Trade directly with verified merchants and peers.",
+    "payments_title": "Multiple Payment Methods",
+    "payments_desc": "Bank, E-Wallets, Cash, and 300+ more.",
+    "seller_label": "Seller",
+    "completion_label": "Completion",
+    "escrow_active": "Escrow System Active",
+    "escrow_locked": "Crypto locked in secure smart contract",
+    "confirm_btn": "Confirm Payment Received"
+  },
+  "Market": {
+    "title": "Market <span>Overview</span>",
+    "subtitle": "Real-time data for the most traded assets on our platform.",
+    "usdt_tab": "USDT Markets",
+    "btc_tab": "BTC Markets",
+    "asset": "Asset",
+    "price": "Last Price",
+    "change": "24h Change",
+    "volume": "Market Cap / Vol",
+    "action": "Action",
+    "trade_now": "Trade Now"
+  },
+  "P2P": {
+    "title": "Trade with 300+ <span>Payment Methods</span>",
+    "subtitle": "From bank transfers to e-wallets, choose exactly how you want to pay or get paid. No trading fees for makers.",
+    "explore": "Explore all methods",
+    "buy_usdt": "Buy USDT",
+    "amount": "Amount",
+    "escrow_protected": "Escrow Protected",
+    "safe_trades": "100% Safe trades"
+  },
+  "Testimonials": {
+    "title": "Verified User <span>Reviews</span>",
+    "user1_name": "John",
+    "user1_country": "USA",
+    "user1_review": "The fastest P2P experience I've ever had. 5 minutes from bank transfer to USDT in my wallet!",
+    "user2_name": "Amit",
+    "user2_country": "India",
+    "user2_review": "Escrow protection is real and reliable. I trade high volumes here with full peace of mind.",
+    "user3_name": "Chen",
+    "user3_country": "China",
+    "user3_review": "Best rates for ETH/USDT. The interface is miles ahead of traditional exchanges.",
+    "user4_name": "Ali",
+    "user4_country": "UAE",
+    "user4_review": "Great customer support. I had an issue with a merchant and it was resolved in 30 minutes.",
+    "user5_name": "Maria",
+    "user5_country": "Brazil",
+    "user5_review": "Love the glassmorphism design. Very easy to use on both mobile and desktop."
+  },
+  "FAQ": {
+    "title": "Frequently Asked <span>Questions</span>",
+    "subtitle": "Everything you need to know about trading on CryptoP2P.",
+    "q1": "Is P2P trading safe?",
+    "a1": "Yes, our escrow system and mandatory identity verification for merchants ensure a high level of security for all trades.",
+    "q2": "How escrow works?",
+    "a2": "When a trade starts, the seller's crypto is locked in a smart contract. Once the buyer pays and the seller confirms, the escrow releases funds to the buyer.",
+    "q3": "What payment methods are supported?",
+    "a3": "We support over 300+ methods including Bank Transfer, SEPA, PayPal, Wise, Zelle, and local mobile wallets globally.",
+    "q4": "Are there fees?",
+    "a4": "There are 0.0% fees for 'makers' (those who post ads). 'Takers' pay a small transaction fee that varies by currency.",
+    "q5": "How long does a trade take?",
+    "a5": "Most trades are completed in under 15 minutes. It primarily depends on how fast the payment method used transfers funds."
+  },
+  "Partners": {
+    "title": "Trusted by Global Leaders"
+  },
+  "CTA": {
+    "title": "Ready to start trading?",
+    "subtitle": "Join millions of users on the world's most premium P2P platform.",
+    "btn": "Create Free Account"
+  },
+  "Footer": {
+    "desc": "Building the future of decentralized peer-to-peer commerce.",
+    "platform": "Platform",
+    "support": "Support",
+    "legal": "Legal",
+    "products": "Products",
+    "spot": "Spot Trading",
+    "earn": "Crypto Earn",
+    "institutional": "Institutional",
+    "launchpad": "Launchpad",
+    "p2p": "P2P Trading",
+    "wallet": "Wallet",
+    "vip": "VIP Program",
+    "help": "Help Center",
+    "ticket": "Submit a Ticket",
+    "fees": "Fees",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "kyc": "KYC/AML Policy",
+    "rights": "All rights reserved."
+  },
+  "MegaMenu": {
+    "products": "Products",
+    "spot_title": "Spot Trading",
+    "spot_desc": "For the Long-Term Believer",
+    "futures_title": "Futures Trading",
+    "futures_desc": "For the Strategic Planner",
+    "p2p_title": "Peer-to-Peer (P2P) Trading",
+    "p2p_desc": "For the Direct Negotiator",
+    "margin_title": "Margin Trading",
+    "margin_desc": "For the Risk-Tolerant Optimizer",
+    "bot_title": "Bot or Algorithmic Trading",
+    "bot_desc": "For the Data-Driven Pro",
+    "arbitrage_title": "Arbitrage trading",
+    "arbitrage_desc": "For the Sharp Opportunist"
+  },
+  "Common": {
+    "total_balance": "Total Balance",
+    "trade_now": "Trade Now",
+    "usdt": "USDT",
+    "dir": "ltr",
+    "buy": "Buy"
+  }
+}
