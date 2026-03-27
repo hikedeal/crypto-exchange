@@ -12,8 +12,8 @@ expect {
 
 expect -re {[$#] }
 
-# Stash local changes and pull
-send "cd /root/crypto-exchange && git stash && git pull origin main\r"
+# Fetch and reset to origin
+send "cd /root/crypto-exchange && git fetch origin && git reset --hard origin/main\r"
 expect -re {[$#] }
 
 # Install deps

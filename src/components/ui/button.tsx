@@ -44,7 +44,10 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends ButtonPrimitive.Props,
-    VariantProps<typeof buttonVariants> {}
+    VariantProps<typeof buttonVariants> {
+  children?: React.ReactNode;
+  className?: string;
+}
 
 function Button({ className, variant = "default", size = "default", ...props }: ButtonProps) {
   return (

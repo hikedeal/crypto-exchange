@@ -6,8 +6,8 @@ import { GradientButton } from "@/components/ui/gradient-button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { 
   ArrowRight, ShieldCheck, Zap, Globe, Lock, CreditCard, 
-  ChevronRight, Star, Plus, Minus, ArrowUpRight, ArrowDownRight,
-  TrendingUp, Users, Wallet, Headphones, ChevronDown, CheckCircle2, Quote
+  ChevronRight, Star, ArrowUpRight, ArrowDownRight,
+  TrendingUp, Users, Wallet, CheckCircle2, Quote
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -16,38 +16,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname, useRouter, routing } from "@/i18n/routing";
-import { useCurrencyStore, type Currency } from "@/store/useCurrencyStore";
+import { usePathname, useRouter } from "@/i18n/routing";
+import { useCurrencyStore } from "@/store/useCurrencyStore";
 import { useAdminStore } from "@/store/useAdminStore";
 import { useP2PStore } from "@/store/useP2PStore";
+import { LandingNavbar } from "@/components/layout/LandingNavbar";
+import { LandingFooter } from "@/components/layout/LandingFooter";
 
-const flags: Record<string, string> = {
-  en: "🇺🇸",
-  hi: "🇮🇳",
-  es: "🇪🇸",
-  zh: "🇨🇳",
-  ar: "🇦🇪",
-  ru: "🇷🇺",
-};
-
-const localeNames: Record<string, string> = {
-  en: "English",
-  hi: "Hindi",
-  es: "Spanish",
-  zh: "Chinese",
-  ar: "Arabic",
-  ru: "Russian",
-};
-
-const currencies: Currency[] = ["USD", "EUR", "INR", "AED", "GBP", "CNY"];
 const userAvatars = [
   "/avatars/user_avatar_john_1773685431308.png",
   "/avatars/user_avatar_amit_1773685512361.png",
@@ -91,29 +68,14 @@ const DEFAULT_MARKET_DATA: MarketData[] = [
 
 export default function LandingPage() {
   const t = useTranslations();
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const { currency, setCurrency, formatCurrency } = useCurrencyStore();
-  const cms = useAdminStore((state) => state.cms);
+  const { formatCurrency } = useCurrencyStore();
+  const cms = useAdminStore((state: any) => state.cms);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
   
-  const handleLocaleChange = (newLocale: string) => {
-    console.log(`Changing locale to: ${newLocale}`);
-    // Robust cleanup: remove any of our supported locales from the start of the path
-    const cleanPath = pathname.replace(/^\/(en|hi|es|zh|ar|ru)(\/|$)/, '/') || '/';
-    router.replace(cleanPath, { locale: newLocale as any });
-  };
-
-  const handleCurrencyChange = (newCurr: Currency) => {
-    console.log(`Changing currency to: ${newCurr}`);
-    setCurrency(newCurr);
-  };
-
   const [tickerPrices, setTickerPrices] = useState<TickerData[]>(DEFAULT_TICKER_DATA);
   const [marketData, setMarketData] = useState<MarketData[]>(DEFAULT_MARKET_DATA);
 
@@ -171,115 +133,8 @@ export default function LandingPage() {
       <div className="fixed top-1/2 right-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/2" />
       <div className="fixed bottom-0 left-1/4 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[150px] pointer-events-none translate-y-1/2" />
       
-      {/* Navbar Minimal */}
-      <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-2xl font-bold text-transparent tracking-tight">
-              CryptoP2P
-            </span>
-          </div>
-          <nav className="hidden md:flex items-center gap-8">
-            {/* Mega Menu */}
-            <div className="relative group">
-              <button className="flex items-center gap-1 text-sm font-medium text-white hover:text-primary transition-colors">
-                {t("MegaMenu.products")}
-                <ChevronDown className="h-4 w-4 opacity-50 transition-transform group-hover:rotate-180" />
-              </button>
-              
-              <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                <div className="w-[600px] bg-background/95 border border-white/10 rounded-2xl p-6 shadow-2xl backdrop-blur-xl">
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-                    {/* Column 1 */}
-                    <Link href="/spot" className="group/item flex flex-col gap-1">
-                      <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.spot_title")}</span>
-                      <span className="text-xs text-muted-foreground">{t("MegaMenu.spot_desc")}</span>
-                    </Link>
-                    {/* Column 2 */}
-                    <Link href="/margin" className="group/item flex flex-col gap-1">
-                      <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.margin_title")}</span>
-                      <span className="text-xs text-muted-foreground">{t("MegaMenu.margin_desc")}</span>
-                    </Link>
-                    
-                    <Link href="/futures" className="group/item flex flex-col gap-1">
-                      <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.futures_title")}</span>
-                      <span className="text-xs text-muted-foreground">{t("MegaMenu.futures_desc")}</span>
-                    </Link>
-                    <Link href="/bot" className="group/item flex flex-col gap-1">
-                      <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.bot_title")}</span>
-                      <span className="text-xs text-muted-foreground">{t("MegaMenu.bot_desc")}</span>
-                    </Link>
-                    
-                    <Link href="/p2p" className="group/item flex flex-col gap-1">
-                      <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.p2p_title")}</span>
-                      <span className="text-xs text-muted-foreground">{t("MegaMenu.p2p_desc")}</span>
-                    </Link>
-                    <Link href="/arbitrage" className="group/item flex flex-col gap-1">
-                      <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.arbitrage_title")}</span>
-                      <span className="text-xs text-muted-foreground">{t("MegaMenu.arbitrage_desc")}</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <Link href="#features" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.features")}</Link>
-            <Link href="#p2p" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.p2p")}</Link>
-            <Link href="#market" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.market")}</Link>
-          </nav>
-          <div className="flex items-center gap-1.5 sm:gap-4 overflow-hidden">
-            <div className="flex items-center gap-1 md:gap-2 shrink-0">
-              {/* Language Switcher */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="h-8 gap-1 md:gap-2 px-1.5 md:px-2 text-muted-foreground hover:text-white hover:bg-white/5 border border-white/5 rounded-lg transition-all flex items-center bg-transparent shrink-0">
-                  <span className="text-sm md:text-base leading-none">{flags[locale]}</span>
-                  <span className="text-[10px] md:text-xs font-medium uppercase hidden xs:inline">{locale}</span>
-                  <ChevronDown className="h-3 w-3 opacity-50" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-40 bg-background/95 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl z-[100]">
-                  {routing.locales.map((loc) => (
-                    <DropdownMenuItem
-                      key={loc}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
-                      onClick={() => handleLocaleChange(loc)}
-                    >
-                      <span className="text-lg">{flags[loc]}</span>
-                      <span>{localeNames[loc]}</span>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Currency Switcher */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="h-8 gap-1 md:gap-2 px-1.5 md:px-2 text-muted-foreground hover:text-white hover:bg-white/5 border border-white/5 rounded-lg transition-all flex items-center bg-transparent shrink-0">
-                  <span className="text-[10px] md:text-xs font-bold">{currency}</span>
-                  <ChevronDown className="h-3 w-3 opacity-50" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-32 bg-background/95 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl z-[100]">
-                  {currencies.map((curr) => (
-                    <DropdownMenuItem
-                      key={curr}
-                      className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
-                      onClick={() => handleCurrencyChange(curr)}
-                    >
-                      <span>{curr}</span>
-                      {currency === curr && <div className="h-1 w-1 rounded-full bg-primary" />}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
-            <Link href="/login" className="text-sm font-medium text-white hover:text-primary transition-colors hidden md:block shrink-0">{t("Navbar.login")}</Link>
-            <Link href="/register" className="shrink-0">
-              <GradientButton className="text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 h-8 sm:h-9">
-                {t("Navbar.signup")}
-              </GradientButton>
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Navbar Shared */}
+      <LandingNavbar />
 
       <main className="flex-1">
         {/* Hero Section */}
@@ -298,7 +153,7 @@ export default function LandingPage() {
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
               {mounted ? cms.hero.subtitle : t("Hero.subtitle")}
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4" dir={t("Common.dir") === "rtl" ? "rtl" : "ltr"}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Link href="/register">
                 <GradientButton className="h-16 text-lg w-full sm:w-60 font-medium">
                   {mounted ? cms.hero.ctaPrimary : t("Hero.cta_start")}
@@ -362,7 +217,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Features (Existing) */}
+        {/* Features */}
         <section id="features" className="py-24 px-4 relative">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16 space-y-4">
@@ -458,7 +313,9 @@ export default function LandingPage() {
                       <p className="text-xs font-bold text-emerald-400">{t("About.escrow_active")}</p>
                       <p className="text-[10px] text-emerald-300 opacity-70">{t("About.escrow_locked")}</p>
                     </div>
-                    <GradientButton className="w-full text-xs font-bold h-10">{t("About.confirm_btn")}</GradientButton>
+                    <Link href="/register">
+                      <GradientButton className="w-full text-xs font-bold h-10">{t("About.confirm_btn")}</GradientButton>
+                    </Link>
                   </div>
                 </div>
               </GlassCard>
@@ -474,7 +331,7 @@ export default function LandingPage() {
               <div className="space-y-4">
                 <h2 className="text-3xl md:text-5xl font-bold text-white">
                   {t.rich("Market.title", {
-                    span: (chunks) => <span className="text-blue-400">{chunks}</span>
+                    span: (chunks: React.ReactNode) => <span className="text-blue-400">{chunks}</span>
                   })}
                 </h2>
                 <p className="text-muted-foreground">{t("Market.subtitle")}</p>
@@ -540,7 +397,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* P2P Preview & Payment Methods (Existing) */}
+        {/* P2P Section */}
         <section id="p2p" className="py-24 px-4 bg-white/[0.02] border-y border-white/5 relative overflow-hidden">
           <div className="absolute top-1/2 left-1/2 w-[800px] h-[500px] bg-primary/10 rounded-[100%] blur-[120px] pointer-events-none -translate-x-1/2 -translate-y-1/2" />
           
@@ -583,19 +440,19 @@ export default function LandingPage() {
         </section>
 
 
-        {/* Testimonials Marquee */}
+        {/* Testimonials */}
         <section className="py-32 px-4 relative overflow-hidden bg-black/40">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
           
-          <div className="max-w-7xl mx-auto mb-16 relative">
+          <div className="max-w-7xl mx-auto mb-16 relative text-center">
             <div className="flex justify-center mb-6">
               <span className="px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-xs font-bold text-primary uppercase tracking-widest">
                 Wall of Love
               </span>
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold text-white text-center tracking-tight">
+            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
               {t.rich("Testimonials.title", {
-                span: (chunks) => <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">{chunks}</span>
+                span: (chunks: React.ReactNode) => <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">{chunks}</span>
               })}
             </h2>
           </div>
@@ -646,13 +503,13 @@ export default function LandingPage() {
           <div className="text-center mb-16 space-y-4">
             <h2 className="text-3xl md:text-5xl font-bold text-white">
               {t.rich("FAQ.title", {
-                span: (chunks) => <span className="text-cyan-400">{chunks}</span>
+                span: (chunks: React.ReactNode) => <span className="text-cyan-400">{chunks}</span>
               })}
             </h2>
             <p className="text-muted-foreground">{t("FAQ.subtitle")}</p>
           </div>
           
-          <Accordion className="w-full space-y-4">
+          <Accordion type="single" collapsible className="w-full space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <AccordionItem key={i} value={`item-${i}`} className="border-white/5 bg-white/[0.02] rounded-xl px-6">
                 <AccordionTrigger className="text-white hover:text-primary transition-colors py-6 text-left">{t(`FAQ.q${i}`)}</AccordionTrigger>
@@ -679,7 +536,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* CTA (Preserved) */}
+        {/* CTA */}
         <section className="py-32 px-4 relative text-center">
           <div className="max-w-3xl mx-auto space-y-8 relative z-10">
             <h2 className="text-4xl md:text-6xl font-bold text-white">{t("CTA.title")}</h2>
@@ -695,104 +552,14 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10 bg-black/40 py-12 px-4 mt-auto">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-8">
-          <div className="col-span-2 md:col-span-1">
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent tracking-tight block mb-4">
-              CryptoP2P
-            </span>
-            <p className="text-sm text-muted-foreground pr-4">{t("Footer.desc")}</p>
-          </div>
-          <div>
-            <h4 className="font-semibold text-white mb-4">{t("Footer.products")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.spot")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.earn")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.institutional")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.launchpad")}</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-white mb-4">{t("Footer.platform")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.p2p")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.wallet")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.vip")}</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-white mb-4">{t("Footer.support")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.help")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.ticket")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.fees")}</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-white mb-4">{t("Footer.legal")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.terms")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.privacy")}</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.kyc")}</Link></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-             {/* Language Switcher */}
-             <DropdownMenu>
-                <DropdownMenuTrigger className="h-8 gap-2 px-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all flex items-center text-sm font-medium text-white">
-                  <span className="text-base leading-none">{flags[locale]}</span>
-                  <span className="uppercase">{locale}</span>
-                  <ChevronDown className="h-3 w-3 opacity-50 ml-1" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-40 bg-black/90 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl">
-                  {routing.locales.map((loc) => (
-                    <DropdownMenuItem
-                      key={loc}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
-                      onClick={() => handleLocaleChange(loc)}
-                    >
-                      <span className="text-lg">{flags[loc]}</span>
-                      <span>{localeNames[loc]}</span>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              {/* Currency Switcher */}
-              <DropdownMenu>
-                <DropdownMenuTrigger className="h-8 gap-2 px-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all flex items-center text-sm font-bold text-white">
-                  <span>{currency}</span>
-                  <ChevronDown className="h-3 w-3 opacity-50 ml-1" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-32 bg-black/90 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl">
-                  {currencies.map((curr) => (
-                    <DropdownMenuItem
-                      key={curr}
-                      className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
-                      onClick={() => handleCurrencyChange(curr)}
-                    >
-                      <span>{curr}</span>
-                      {currency === curr && <div className="h-1 w-1 rounded-full bg-primary" />}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-          </div>
-
-          <div className="text-sm text-muted-foreground/50 text-center md:text-right">
-            &copy; {new Date().getFullYear()} CryptoP2P Exchange. {t("Footer.rights")}
-          </div>
-        </div>
-      </footer>
+      {/* Footer Shared */}
+      <LandingFooter />
     </div>
   );
 }
 
 function P2PPreview({ t, formatCurrency, mounted }: { t: any, formatCurrency: any, mounted: boolean }) {
-  const ads = useP2PStore((state) => state.ads);
+  const ads = useP2PStore((state: any) => state.ads);
   const displayAds = ads.filter(ad => ad.coin === "USDT" && ad.type === "SELL").slice(0, 3);
 
   return (
@@ -814,7 +581,9 @@ function P2PPreview({ t, formatCurrency, mounted }: { t: any, formatCurrency: an
                   <p className="text-xs text-muted-foreground">{ad.price} {ad.currency} / {ad.coin}</p>
                 </div>
               </div>
-              <button className="px-4 py-1.5 rounded bg-emerald-500/20 text-emerald-400 text-xs font-bold">{t("Common.buy")}</button>
+              <Link href="/register">
+                <button className="px-4 py-1.5 rounded bg-emerald-500/20 text-emerald-400 text-xs font-bold">{t("Common.buy")}</button>
+              </Link>
             </div>
           )) : (
             [1, 2, 3].map((_, i) => (
@@ -826,7 +595,9 @@ function P2PPreview({ t, formatCurrency, mounted }: { t: any, formatCurrency: an
                     <p className="text-xs text-muted-foreground">1.01 USDT / USD</p>
                   </div>
                 </div>
-                <button className="px-4 py-1.5 rounded bg-emerald-500/20 text-emerald-400 text-xs font-bold">{t("Common.buy")}</button>
+                <Link href="/register">
+                  <button className="px-4 py-1.5 rounded bg-emerald-500/20 text-emerald-400 text-xs font-bold">{t("Common.buy")}</button>
+                </Link>
               </div>
             ))
           )}
@@ -835,4 +606,3 @@ function P2PPreview({ t, formatCurrency, mounted }: { t: any, formatCurrency: an
     </GlassCard>
   );
 }
-
