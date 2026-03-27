@@ -560,7 +560,7 @@ export default function LandingPage() {
 
 function P2PPreview({ t, formatCurrency, mounted }: { t: any, formatCurrency: any, mounted: boolean }) {
   const ads = useP2PStore((state: any) => state.ads);
-  const displayAds = ads.filter(ad => ad.coin === "USDT" && ad.type === "SELL").slice(0, 3);
+  const displayAds = ads.filter((ad: any) => ad.coin === "USDT" && ad.type === "SELL").slice(0, 3);
 
   return (
     <GlassCard className="p-2 border-white/10 shadow-2xl shadow-blue-900/40 rotate-1 hover:rotate-0 transition-transform duration-500">
@@ -570,7 +570,7 @@ function P2PPreview({ t, formatCurrency, mounted }: { t: any, formatCurrency: an
           <span className="text-xs text-muted-foreground">{t("P2P.amount")}: {mounted ? formatCurrency(1000) : "$1,000.00"}</span>
         </div>
         <div className="p-0">
-          {displayAds.length > 0 ? displayAds.map((ad, i) => (
+          {displayAds.length > 0 ? displayAds.map((ad: any, i: number) => (
             <div key={ad.id} className="flex items-center justify-between p-4 border-b border-white/5 hover:bg-white/5">
               <div className="flex items-center gap-3">
                 <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">
@@ -586,7 +586,7 @@ function P2PPreview({ t, formatCurrency, mounted }: { t: any, formatCurrency: an
               </Link>
             </div>
           )) : (
-            [1, 2, 3].map((_, i) => (
+            [1, 2, 3].map((_: any, i: number) => (
               <div key={i} className="flex items-center justify-between p-4 border-b border-white/5 hover:bg-white/5">
                 <div className="flex items-center gap-3">
                   <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">T</div>
