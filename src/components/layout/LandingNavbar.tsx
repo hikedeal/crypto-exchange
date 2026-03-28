@@ -180,7 +180,7 @@ export function LandingNavbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed top-0 bottom-0 right-0 w-[280px] sm:w-[320px] bg-neutral-950 z-[99999] lg:hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col border-l border-white/10"
+            className="fixed top-0 bottom-0 right-0 w-[280px] sm:w-[320px] bg-[#050505] z-[99999] lg:hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col border-l border-white/10"
             style={{ 
               backgroundColor: '#0a0b12',
               height: '100dvh',

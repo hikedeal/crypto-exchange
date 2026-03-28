@@ -178,7 +178,7 @@ export function TopNavbar() {
               </button>
 
               {profileOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-white/10 bg-neutral-950 shadow-2xl overflow-hidden z-50">
+                <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-white/10 bg-[#050505] shadow-2xl overflow-hidden z-50">
                   <div className="px-3 py-2.5 border-b border-white/5">
                     <p className="text-xs font-bold text-white">{user.name}</p>
                     <p className="text-[10px] text-muted-foreground">{user.email}</p>
