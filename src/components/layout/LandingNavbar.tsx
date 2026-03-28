@@ -155,20 +155,20 @@ export function LandingNavbar() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 top-20 z-40 bg-neutral-900/98 backdrop-blur-xl transition-all duration-300 lg:hidden ${isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}>
-        <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8">
+      <div className={`fixed inset-0 top-20 z-40 bg-neutral-900 transition-all duration-300 lg:hidden ${isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}>
+        <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8 relative z-50">
           <div className="flex flex-col gap-4">
             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
-            <div className="grid grid-cols-1 gap-2">
+            <div className="flex flex-col gap-3">
               {productLinks.map((link) => (
                 <Link 
                   key={link.href} 
                   href={link.href as any} 
-                  className="flex flex-col gap-0.5 p-3 rounded-xl hover:bg-white/5 transition-colors opacity-100"
+                  className="block w-full p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="text-sm font-bold text-white opacity-100">{link.title}</span>
-                  <span className="text-xs text-muted-foreground opacity-100">{link.desc}</span>
+                  <div className="text-base font-bold text-white mb-1">{link.title}</div>
+                  <div className="text-xs text-muted-foreground leading-relaxed">{link.desc}</div>
                 </Link>
               ))}
             </div>
