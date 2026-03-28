@@ -158,115 +158,126 @@ export function LandingNavbar() {
         </div>
       </div>
 
-      {/* High-Fidelity Mobile Drawer */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] lg:hidden"
-            />
+    </header>
 
-            {/* Drawer Content */}
-            <motion.div 
-              initial={{ x: "100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0 }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 w-[300px] xs:w-[340px] bg-[#0b0f19] z-[10000] lg:hidden shadow-2xl flex flex-col border-l border-white/5"
-              style={{ backgroundColor: '#0b0f19' }}
-            >
-              {/* Drawer Header */}
-              <div className="h-20 px-6 flex items-center justify-between border-b border-white/5 bg-[#0b0f19]">
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
-                  CryptoP2P
+    {/* High-Fidelity Mobile Drawer - Moved outside header for full-height coverage */}
+    <AnimatePresence>
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] lg:hidden"
+          />
+
+          {/* Drawer Content */}
+          <motion.div 
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed inset-y-0 right-0 w-[300px] xs:w-[340px] bg-[#0b0f19] z-[10000] lg:hidden shadow-2xl flex flex-col border-l border-white/10"
+            style={{ height: '100dvh' }}
+          >
+            {/* Drawer Header */}
+            <div className="h-20 px-6 flex items-center justify-between border-b border-white/5 bg-[#0b0f19] shrink-0">
+              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
+                CryptoP2P
+              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                  {t("Navbar.menu") !== "Navbar.menu" ? t("Navbar.menu") : "Menu"}
                 </span>
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{t("Navbar.menu")}</span>
-                  <button 
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 rounded-lg bg-white/5 text-white hover:bg-white/10 transition-colors"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
+                <button 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 rounded-lg bg-white/5 text-white hover:bg-white/10 transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
               </div>
+            </div>
 
-              {/* Drawer Body - Scrollable */}
-              <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-8 bg-[#0b0f19]">
-                {/* Products Section */}
-                <div className="flex flex-col gap-4">
-                  <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">{t("MegaMenu.products")}</h3>
-                  <div className="flex flex-col gap-2">
-                    {productLinks.map((link) => {
-                      const Icon = link.icon || Activity;
-                      return (
-                        <Link 
-                          key={link.href} 
-                          href={link.href as any} 
-                          className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-all text-white"
-                          onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                          <div className="p-2.5 rounded-lg bg-white/5 border border-white/5 text-primary group-hover:bg-primary/20 group-hover:border-primary/20 transition-all flex-shrink-0">
-                            <Icon className="h-4 w-4" />
-                          </div>
-                          <div className="flex flex-col min-w-0">
-                            <span className="text-sm font-bold text-white group-hover:text-primary transition-colors truncate">{link.title}</span>
-                            <span className="text-[11px] text-white/40 leading-tight mt-0.5 line-clamp-2">{link.desc}</span>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Main Navigation Section */}
-                <div className="flex flex-col gap-4">
-                  <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">Navigation</h3>
-                  <div className="flex flex-col gap-1">
-                    {[
-                      { name: t("Navbar.features"), href: "/#features" },
-                      { name: t("Navbar.p2p"), href: "/#p2p" },
-                      { name: t("Navbar.market"), href: "/#market" },
-                    ].map((item) => (
+            {/* Drawer Body - Scrollable */}
+            <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-8 bg-[#0b0f19]">
+              {/* Products Section */}
+              <div className="flex flex-col gap-4">
+                <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">{t("MegaMenu.products")}</h3>
+                <div className="flex flex-col gap-2">
+                  {productLinks.map((link) => {
+                    const Icon = link.icon || Activity;
+                    return (
                       <Link 
-                        key={item.href}
-                        href={item.href as any}
-                        className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 text-sm font-medium text-white/80 hover:text-white transition-all group"
+                        key={link.href} 
+                        href={link.href as any} 
+                        className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/10 transition-all border border-transparent hover:border-white/5"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        {item.name}
-                        <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                        <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-primary group-hover:bg-primary/20 group-hover:border-primary/20 transition-all shrink-0">
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">
+                            {link.title}
+                          </span>
+                          <span className="text-[11px] text-white/50 leading-tight mt-0.5 line-clamp-2">
+                            {link.desc}
+                          </span>
+                        </div>
                       </Link>
-                    ))}
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Drawer Footer - Fixed Bottom */}
-              <div className="p-6 border-t border-white/5 bg-[#0b0f19] mt-auto">
-                <Link 
-                  href="/login" 
-                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-sm hover:text-primary transition-all group"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {t("Navbar.login")}
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <Link href="/register" className="block mt-2" onClick={() => setIsMobileMenuOpen(false)}>
-                  <GradientButton className="w-full py-6 rounded-xl text-sm font-bold shadow-lg shadow-primary/10">
-                    {t("Navbar.signup")}
-                  </GradientButton>
-                </Link>
+              {/* Main Navigation */}
+              <div className="flex flex-col gap-4">
+                <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">Discover</h3>
+                <div className="flex flex-col gap-1">
+                  {[
+                    { name: t("Navbar.features"), href: "/#features" },
+                    { name: t("Navbar.p2p"), href: "/#p2p" },
+                    { name: t("Navbar.market"), href: "/#market" },
+                  ].map((item) => (
+                    <Link 
+                      key={item.href}
+                      href={item.href as any}
+                      className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 text-sm font-medium text-white/80 hover:text-white transition-all group"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                      <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </div>
+
+            {/* Drawer Footer - Fixed Bottom */}
+            <div className="p-6 border-t border-white/5 bg-[#0b0f19] shrink-0">
+              <Link 
+                href="/login" 
+                className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-sm hover:text-primary transition-all group"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {t("Navbar.login")}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link href="/register" className="block mt-2" onClick={() => setIsMobileMenuOpen(false)}>
+                <GradientButton className="w-full py-6 rounded-xl text-sm font-bold shadow-lg shadow-primary/10">
+                  {t("Navbar.signup")}
+                </GradientButton>
+              </Link>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+    </>
+  );
+}
     </header>
   );
 }
