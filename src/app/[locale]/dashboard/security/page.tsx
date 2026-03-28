@@ -33,7 +33,6 @@ export default function SecurityPage() {
     { id: 3, device: "Windows PC - Edge", location: "London, UK", ip: "45.22.11.89", time: "3 days ago", status: "Success" },
   ];
 
-  if (!user) return null;
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">

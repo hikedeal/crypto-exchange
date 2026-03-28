@@ -11,11 +11,18 @@ import { Save } from "lucide-react";
 export default function ProfilePage() {
   const { user, updateProfile, addNotification } = useUserStore();
   
+  const fallbackUser = {
+    name: "Alex Trader",
+    email: "alex@crypto.local",
+    phone: "+1 234 567 8900",
+    country: "United States"
+  };
+
   const [formData, setFormData] = useState({
-    name: user?.name || "",
-    email: user?.email || "",
-    phone: user?.phone || "",
-    country: user?.country || "",
+    name: user?.name || fallbackUser.name,
+    email: user?.email || fallbackUser.email,
+    phone: user?.phone || fallbackUser.phone,
+    country: user?.country || fallbackUser.country,
   });
 
   const [saving, setSaving] = useState(false);
@@ -32,7 +39,6 @@ export default function ProfilePage() {
     }, 800);
   };
 
-  if (!user) return null;
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -44,11 +50,11 @@ export default function ProfilePage() {
       <GlassCard className="p-8">
         <div className="flex items-center gap-6 mb-8 pb-8 border-b border-white/10">
           <div className="h-24 w-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-4xl font-bold text-white shadow-lg shadow-purple-500/20">
-            {user.name.charAt(0)}
+            {(user?.name || fallbackUser.name).charAt(0)}
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">{user.name}</h2>
-            <p className="text-muted-foreground">{user.email}</p>
+            <h2 className="text-xl font-bold text-white">{user?.name || fallbackUser.name}</h2>
+            <p className="text-muted-foreground">{user?.email || fallbackUser.email}</p>
             <div className="flex gap-2 mt-3">
               <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
                 Email Verified
