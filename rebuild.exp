@@ -15,13 +15,20 @@ expect -re {[$#] }
 send "cd /root/crypto-exchange\r"
 expect -re {[$#] }
 
+# Pull latest code
+send "git fetch origin && git reset --hard origin/main\r"
+expect -re {[$#] }
+
+# Install dependencies
 send "npm install --legacy-peer-deps 2>&1 | tail -5\r"
 expect -re {[$#] }
 
-send "npm run build 2>&1 | tail -30\r"
+# Build the app
+send "npm run build 2>&1 | tail -40\r"
 set timeout 900
 expect -re {[$#] }
 
+# Restart PM2
 send "pm2 restart crypto-exchange && sleep 5 && pm2 list\r"
 set timeout 30
 expect -re {[$#] }
