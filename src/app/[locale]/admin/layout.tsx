@@ -164,7 +164,7 @@ export default function AdminLayout({
       {/* Main Content */}
       <main className="flex-1 flex flex-col relative overflow-hidden lg:pl-64">
         {/* Top Header */}
-        <header className="h-20 border-b border-white/5 bg-black/20 backdrop-blur-xl flex items-center justify-between px-4 md:px-8">
+        <header className="h-20 border-b border-white/5 bg-black/20 backdrop-blur-xl flex items-center justify-between px-4 md:px-8 relative z-50">
           {/* Left side spacer on mobile for hamburger button */}
           <div className="lg:hidden w-12" />
 
