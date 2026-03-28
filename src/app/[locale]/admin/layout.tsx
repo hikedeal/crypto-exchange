@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useUserStore } from "@/store/useUserStore";
 import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -96,6 +97,19 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
+  const { user } = useUserStore();
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setProfileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex overflow-hidden">
@@ -169,11 +183,48 @@ export default function AdminLayout({
               <span className="absolute top-2 right-2 h-2 w-2 bg-primary rounded-full border-2 border-[#050505]" />
             </button>
             <div className="flex items-center gap-3 border-l border-white/10 pl-4 md:pl-6">
-              <div className="text-right hidden sm:block">
-                <p className="text-xs font-bold text-white">Project Lead</p>
-                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">Super Admin</p>
+              <div ref={profileRef} className="relative">
+                <button
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  className="flex items-center gap-3 cursor-pointer group outline-none bg-transparent"
+                >
+                  <div className="text-right hidden sm:block">
+                    <p className="text-xs font-bold text-white">{user?.name || "Project Lead"}</p>
+                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter">Super Admin</p>
+                  </div>
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 border border-white/10 shadow-lg shrink-0 flex items-center justify-center font-bold text-white ring-2 ring-transparent group-hover:ring-primary/50 transition-all">
+                    {(user?.name || "P").charAt(0)}
+                  </div>
+                </button>
+
+                {profileOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-white/10 bg-neutral-950 shadow-2xl overflow-hidden z-50">
+                    <div className="px-3 py-2.5 border-b border-white/5">
+                      <p className="text-xs font-bold text-white">{user?.name || "Project Lead"}</p>
+                      <p className="text-[10px] text-muted-foreground">{user?.email || "admin@example.com"}</p>
+                    </div>
+                    <div className="p-1">
+                      <Link
+                        href="/admin/settings"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white transition-colors"
+                      >
+                        <Settings className="h-4 w-4 text-primary" />
+                        Settings
+                      </Link>
+                      <div className="h-px bg-white/5 my-1" />
+                      <Link
+                        href="/login"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 text-sm font-medium text-red-400/80 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 border border-white/10 shadow-lg shrink-0" />
             </div>
           </div>
         </header>
