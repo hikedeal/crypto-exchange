@@ -7,18 +7,34 @@ import { LandingNavbar } from "@/components/layout/LandingNavbar";
 import { LandingFooter } from "@/components/layout/LandingFooter";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { cn } from "@/lib/utils";
+import { useTicketStore } from "@/store/useTicketStore";
 
 export default function SupportTicketPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [ticketId, setTicketId] = useState("");
+  const addTicket = useTicketStore((state: any) => state.addTicket);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
+    
+    const formData = new FormData(e.target as HTMLFormElement);
+    const newId = `TKT-${Math.floor(Math.random() * 900000) + 100000}`;
+    
     setTimeout(() => {
+      setTicketId(newId);
+      addTicket({
+        id: newId,
+        name: formData.get("name") as string,
+        email: formData.get("email") as string,
+        category: formData.get("category") as string,
+        subject: formData.get("subject") as string,
+        description: formData.get("message") as string,
+      });
       setIsSubmitting(false);
       setIsSubmitted(true);
+      (e.target as HTMLFormElement).reset();
     }, 1500);
   };
 
@@ -48,7 +64,7 @@ export default function SupportTicketPage() {
             </div>
             <h2 className="text-2xl font-bold text-white mb-2">Ticket Submitted Successfully</h2>
             <p className="text-muted-foreground mb-8">
-              We've received your request. A support agent will review your ticket and respond via email within 24 hours. Your ticket ID is #TKT-{Math.floor(Math.random() * 900000) + 100000}.
+              We've received your request. A support agent will review your ticket and respond via email within 24 hours. Your ticket ID is #{ticketId}.
             </p>
             <GradientButton onClick={() => setIsSubmitted(false)} className="px-8">
               Submit Another Request
@@ -62,6 +78,7 @@ export default function SupportTicketPage() {
                   <label htmlFor="name" className="text-sm font-medium text-white/80">Full Name</label>
                   <input 
                     id="name"
+                    name="name"
                     required
                     type="text" 
                     placeholder="Enter your name"
@@ -72,6 +89,7 @@ export default function SupportTicketPage() {
                   <label htmlFor="email" className="text-sm font-medium text-white/80">Email Address</label>
                   <input 
                     id="email"
+                    name="email"
                     required
                     type="email" 
                     placeholder="Enter your registered email"
@@ -85,6 +103,7 @@ export default function SupportTicketPage() {
                 <div className="relative">
                   <select 
                     id="category"
+                    name="category"
                     required
                     className="w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all"
                     defaultValue=""
@@ -103,6 +122,7 @@ export default function SupportTicketPage() {
                 <label htmlFor="subject" className="text-sm font-medium text-white/80">Subject</label>
                 <input 
                   id="subject"
+                  name="subject"
                   required
                   type="text" 
                   placeholder="Brief summary of the issue"
@@ -114,6 +134,7 @@ export default function SupportTicketPage() {
                 <label htmlFor="message" className="text-sm font-medium text-white/80">Description</label>
                 <textarea 
                   id="message"
+                  name="message"
                   required
                   rows={6}
                   placeholder="Please describe your issue in detail. Include any relevant transaction IDs, error messages, or steps to reproduce the problem."

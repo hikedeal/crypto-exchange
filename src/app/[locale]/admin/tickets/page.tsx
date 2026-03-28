@@ -3,66 +3,17 @@
 import { useState } from "react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Search, Filter, MessageSquare, CheckCircle, AlertCircle } from "lucide-react";
-
-type TicketStatus = "Open" | "Closed";
-
-interface Ticket {
-  id: string;
-  name: string;
-  email: string;
-  category: string;
-  subject: string;
-  date: string;
-  status: TicketStatus;
-}
-
-const initialTickets: Ticket[] = [
-  {
-    id: "TKT-382914",
-    name: "Alex Smith",
-    email: "alex@example.com",
-    category: "Account & Security",
-    subject: "Cannot reset 2FA",
-    date: "10 mins ago",
-    status: "Open"
-  },
-  {
-    id: "TKT-489201",
-    name: "John Doe",
-    email: "john@example.com",
-    category: "Deposits & Withdrawals",
-    subject: "ETH Withdrawal stuck",
-    date: "2 hours ago",
-    status: "Open"
-  },
-  {
-    id: "TKT-590212",
-    name: "Maria Garcia",
-    email: "maria@example.com",
-    category: "P2P Marketplace Dispute",
-    subject: "Buyer didn't release funds",
-    date: "5 hours ago",
-    status: "Closed"
-  },
-  {
-    id: "TKT-601934",
-    name: "David Kim",
-    email: "david@example.com",
-    category: "Spot/Margin Trading",
-    subject: "Order filled at wrong price",
-    date: "1 day ago",
-    status: "Closed"
-  }
-];
+import { useTicketStore, TicketStatus } from "@/store/useTicketStore";
 
 export default function AdminTicketsPage() {
-  const [tickets, setTickets] = useState<Ticket[]>(initialTickets);
+  const tickets = useTicketStore((state: any) => state.tickets);
+  const toggleStoreStatus = useTicketStore((state: any) => state.toggleStatus);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
 
   const toggleStatus = (id: string, currentStatus: TicketStatus) => {
-    const newStatus = currentStatus === "Open" ? "Closed" : "Open";
-    setTickets(tickets.map(t => t.id === id ? { ...t, status: newStatus } : t));
+    toggleStoreStatus(id);
   };
 
   const filteredTickets = tickets.filter(ticket => {
