@@ -12,7 +12,8 @@
     "market": "Market",
     "security": "Security",
     "login": "Log In",
-    "signup": "Sign Up"
+    "signup": "Sign Up",
+    "menu": "Menu"
   },
   "Stats": {
     "users": "Registered Users",

@@ -168,24 +168,25 @@ export function LandingNavbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] lg:hidden"
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] lg:hidden"
             />
 
             {/* Drawer Content */}
             <motion.div 
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-y-0 right-0 w-[300px] xs:w-[340px] bg-[#0a0b12] z-[10000] lg:hidden shadow-2xl flex flex-col border-l border-white/5"
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="fixed inset-y-0 right-0 w-[300px] xs:w-[340px] bg-[#0b0f19] z-[10000] lg:hidden shadow-2xl flex flex-col border-l border-white/5"
+              style={{ backgroundColor: '#0b0f19' }}
             >
               {/* Drawer Header */}
-              <div className="h-20 px-6 flex items-center justify-between border-b border-white/5">
+              <div className="h-20 px-6 flex items-center justify-between border-b border-white/5 bg-[#0b0f19]">
                 <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
                   CryptoP2P
                 </span>
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-white/40 uppercase tracking-widest">{t("Navbar.menu") || "Menu"}</span>
+                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">{t("Navbar.menu")}</span>
                   <button 
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-2 rounded-lg bg-white/5 text-white hover:bg-white/10 transition-colors"
@@ -196,27 +197,30 @@ export function LandingNavbar() {
               </div>
 
               {/* Drawer Body - Scrollable */}
-              <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-8">
+              <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-8 bg-[#0b0f19]">
                 {/* Products Section */}
                 <div className="flex flex-col gap-4">
                   <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">{t("MegaMenu.products")}</h3>
                   <div className="flex flex-col gap-2">
-                    {productLinks.map((link) => (
-                      <Link 
-                        key={link.href} 
-                        href={link.href as any} 
-                        className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-all"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <div className="p-2.5 rounded-lg bg-white/5 border border-white/5 text-primary group-hover:bg-primary/20 group-hover:border-primary/20 transition-all">
-                          <link.icon className="h-4 w-4" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">{link.title}</span>
-                          <span className="text-[11px] text-white/40 leading-tight mt-0.5">{link.desc}</span>
-                        </div>
-                      </Link>
-                    ))}
+                    {productLinks.map((link) => {
+                      const Icon = link.icon || Activity;
+                      return (
+                        <Link 
+                          key={link.href} 
+                          href={link.href as any} 
+                          className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-all text-white"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <div className="p-2.5 rounded-lg bg-white/5 border border-white/5 text-primary group-hover:bg-primary/20 group-hover:border-primary/20 transition-all flex-shrink-0">
+                            <Icon className="h-4 w-4" />
+                          </div>
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-sm font-bold text-white group-hover:text-primary transition-colors truncate">{link.title}</span>
+                            <span className="text-[11px] text-white/40 leading-tight mt-0.5 line-clamp-2">{link.desc}</span>
+                          </div>
+                        </Link>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -244,7 +248,7 @@ export function LandingNavbar() {
               </div>
 
               {/* Drawer Footer - Fixed Bottom */}
-              <div className="p-6 border-t border-white/5 bg-background/50 backdrop-blur-md">
+              <div className="p-6 border-t border-white/5 bg-[#0b0f19] mt-auto">
                 <Link 
                   href="/login" 
                   className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-sm hover:text-primary transition-all group"
