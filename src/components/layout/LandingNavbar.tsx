@@ -67,16 +67,16 @@ export function LandingNavbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
-          <div className="relative group/mega">
-            <button className="flex items-center gap-1 text-sm font-medium text-white hover:text-primary transition-colors">
+        <nav className="hidden xs:flex items-center gap-2 sm:gap-4 lg:gap-8">
+          <div className="relative group/mega hidden md:block">
+            <button className="flex items-center gap-1 text-[10px] lg:text-sm font-medium text-white hover:text-primary transition-colors">
               {t("MegaMenu.products")}
               <ChevronDown className="h-4 w-4 opacity-50 transition-transform group-hover/mega:rotate-180" />
             </button>
             
             <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover/mega:opacity-100 group-hover/mega:visible transition-all duration-300 z-50">
-              <div className="w-[600px] bg-background/95 border border-white/10 rounded-2xl p-6 shadow-2xl backdrop-blur-xl">
-                <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+              <div className="w-[500px] lg:w-[600px] bg-background/95 border border-white/10 rounded-2xl p-6 shadow-2xl backdrop-blur-xl">
+                <div className="grid grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-6">
                   {productLinks.map((link) => (
                     <Link key={link.href} href={link.href as any} className="group/item flex flex-col gap-1">
                       <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{link.title}</span>
@@ -88,9 +88,9 @@ export function LandingNavbar() {
             </div>
           </div>
 
-          <Link href="/#features" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.features")}</Link>
-          <Link href="/#p2p" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.p2p")}</Link>
-          <Link href="/#market" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.market")}</Link>
+          <Link href="/#features" className="text-[10px] sm:text-xs lg:text-sm font-medium text-muted-foreground hover:text-white transition-colors uppercase sm:normal-case">{t("Navbar.features")}</Link>
+          <Link href="/#p2p" className="text-[10px] sm:text-xs lg:text-sm font-medium text-muted-foreground hover:text-white transition-colors uppercase sm:normal-case">{t("Navbar.p2p")}</Link>
+          <Link href="/#market" className="text-[10px] sm:text-xs lg:text-sm font-medium text-muted-foreground hover:text-white transition-colors uppercase sm:normal-case">{t("Navbar.market")}</Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -136,8 +136,8 @@ export function LandingNavbar() {
               </DropdownMenu>
             </div>
 
-            <Link href="/login" className="text-sm font-medium text-white hover:text-primary transition-colors hidden lg:block shrink-0">{t("Navbar.login")}</Link>
-            <Link href="/register" className="shrink-0 hidden xs:block lg:block">
+            <Link href="/login" className="text-sm font-medium text-white hover:text-primary transition-colors hidden md:block shrink-0">{t("Navbar.login")}</Link>
+            <Link href="/register" className="shrink-0 hidden xs:block md:block">
               <GradientButton className="text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 h-8 sm:h-9">
                 {t("Navbar.signup")}
               </GradientButton>
@@ -146,7 +146,7 @@ export function LandingNavbar() {
 
           {/* Mobile Hamburger Button */}
           <button 
-            className="lg:hidden flex items-center justify-center p-2 text-white hover:bg-white/5 rounded-lg transition-colors"
+            className="flex items-center justify-center p-2 text-white hover:bg-white/5 rounded-lg transition-colors md:hidden"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -155,7 +155,7 @@ export function LandingNavbar() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 top-20 z-40 bg-neutral-900 transition-all duration-300 lg:hidden ${isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}>
+      <div className={`fixed inset-0 top-20 z-40 bg-neutral-900 transition-all duration-300 md:hidden ${isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}>
         <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8 relative z-50">
           <div className="flex flex-col gap-4">
             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
@@ -177,7 +177,7 @@ export function LandingNavbar() {
           <div className="flex flex-col gap-2 border-t border-white/5 pt-8">
             <Link href="/#features" className="text-lg font-bold text-white p-2" onClick={() => setIsMobileMenuOpen(false)}>{t("Navbar.features")}</Link>
             <Link href="/#p2p" className="text-lg font-bold text-white p-2" onClick={() => setIsMobileMenuOpen(false)}>{t("Navbar.p2p")}</Link>
-            <Link href="/#market" className="text-lg font-bold text-white p-2" onClick={() => setIsMobileMenuOpen(false)}>{t("Navbar.market")}</Link>
+            <Link href="/spot" className="text-lg font-bold text-white p-2" onClick={() => setIsMobileMenuOpen(false)}>{t("Navbar.market")}</Link>
           </div>
 
           <div className="mt-auto flex flex-col gap-4 pt-8 border-t border-white/5">
