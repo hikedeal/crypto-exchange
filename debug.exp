@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+set timeout 60
+set password "Hiikedeal@2026"
+
+spawn ssh -o StrictHostKeyChecking=no root@187.127.132.10
+
+expect {
+  "password:" {
+    send "$password\r"
+  }
+}
+
+expect -re {[$#] }
+
+send "pm2 status\r"
+expect -re {[$#] }
+
+send "pm2 logs crypto-exchange --lines 50 --nostream\r"
+expect -re {[$#] }
+
+send "pm2 restart crypto-exchange && sleep 3 && pm2 status\r"
+expect -re {[$#] }
+
+send "exit\r"
+expect eof
