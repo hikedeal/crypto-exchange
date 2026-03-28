@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useUserStore } from "@/store/useUserStore";
 import { useCurrencyStore, type Currency } from "@/store/useCurrencyStore";
@@ -12,9 +12,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter, routing } from "@/i18n/routing";
 
@@ -46,9 +46,22 @@ export function TopNavbar() {
   const pathname = usePathname();
   const t = useTranslations("Common");
   const [mounted, setMounted] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const totalBalanceUsd = user ? (
@@ -150,44 +163,56 @@ export function TopNavbar() {
           </Button>
 
           {user && (
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="flex items-center gap-3 pl-2 sm:border-l border-white/5 cursor-pointer group outline-none">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 font-bold text-white shadow-lg shadow-purple-500/20 text-xs ring-2 ring-transparent group-hover:ring-primary/50 transition-all">
-                    {user.name.charAt(0)}
-                  </div>
-                  <div className="hidden md:block leading-tight">
-                    <p className="text-xs font-bold text-white">{user.name}</p>
-                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter opacity-60">Pro</p>
-                  </div>
+            <div ref={profileRef} className="relative">
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="flex items-center gap-3 pl-2 sm:border-l border-white/5 cursor-pointer group outline-none bg-transparent"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 font-bold text-white shadow-lg shadow-purple-500/20 text-xs ring-2 ring-transparent group-hover:ring-primary/50 transition-all">
+                  {user.name.charAt(0)}
                 </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52 bg-neutral-950 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl mt-2">
-                <div className="px-3 py-2 border-b border-white/5 mb-1">
+                <div className="hidden md:block leading-tight text-left">
                   <p className="text-xs font-bold text-white">{user.name}</p>
-                  <p className="text-[10px] text-muted-foreground">{user.email}</p>
+                  <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter opacity-60">Pro</p>
                 </div>
-                <DropdownMenuItem asChild className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium focus:bg-white/5 focus:text-white text-white/80 cursor-pointer transition-colors">
-                  <Link href="/dashboard/profile">
-                    <User className="h-4 w-4 text-primary" />
-                    My Profile
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium focus:bg-white/5 focus:text-white text-white/80 cursor-pointer transition-colors">
-                  <Link href="/dashboard/security">
-                    <Shield className="h-4 w-4 text-primary" />
-                    Security
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-white/5 my-1" />
-                <DropdownMenuItem asChild className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium focus:bg-red-500/10 focus:text-red-400 text-red-400/80 cursor-pointer transition-colors">
-                  <Link href="/login">
-                    <LogOut className="h-4 w-4" />
-                    Logout
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </button>
+
+              {profileOpen && (
+                <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-white/10 bg-neutral-950 shadow-2xl overflow-hidden z-50">
+                  <div className="px-3 py-2.5 border-b border-white/5">
+                    <p className="text-xs font-bold text-white">{user.name}</p>
+                    <p className="text-[10px] text-muted-foreground">{user.email}</p>
+                  </div>
+                  <div className="p-1">
+                    <Link
+                      href="/dashboard/profile"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white transition-colors"
+                    >
+                      <User className="h-4 w-4 text-primary" />
+                      My Profile
+                    </Link>
+                    <Link
+                      href="/dashboard/security"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white transition-colors"
+                    >
+                      <Shield className="h-4 w-4 text-primary" />
+                      Security
+                    </Link>
+                    <div className="h-px bg-white/5 my-1" />
+                    <Link
+                      href="/login"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2 w-full rounded-lg px-3 py-2.5 text-sm font-medium text-red-400/80 hover:bg-red-500/10 hover:text-red-400 transition-colors"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Logout
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
