@@ -21,6 +21,7 @@ import { useAdminStore } from "@/store/useAdminStore";
 
 export default function UsersManagement() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All Status");
   const users = useAdminStore((state) => state.users);
   const updateUserStatus = useAdminStore((state) => state.updateUserStatus);
   const [mounted, setMounted] = useState(false);
@@ -37,10 +38,12 @@ export default function UsersManagement() {
     );
   }
 
-  const filteredUsers = users.filter(u => 
-    u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    u.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredUsers = users.filter(u => {
+    const matchesSearch = u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      u.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = statusFilter === "All Status" || u.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="space-y-6 md:space-y-8 max-w-7xl mx-auto">
@@ -73,7 +76,11 @@ export default function UsersManagement() {
               <Filter className="h-3 w-3" />
               Filters
             </button>
-            <select className="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs font-medium focus:outline-none focus:border-primary/40 text-white">
+            <select 
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-xs font-medium focus:outline-none focus:border-primary/40 text-white"
+            >
               <option>All Status</option>
               <option>Active</option>
               <option>Banned</option>
