@@ -278,6 +278,3 @@ export function LandingNavbar() {
     </>
   );
 }
-    </header>
-  );
-}
