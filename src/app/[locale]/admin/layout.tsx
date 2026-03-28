@@ -17,7 +17,8 @@ import {
   ChevronRight,
   Megaphone,
   Menu,
-  X
+  X,
+  MessageSquare
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -26,6 +27,7 @@ const adminNav = [
   { name: "Users", href: "/admin/users", icon: Users },
   { name: "Advertisements", href: "/admin/ads", icon: Megaphone },
   { name: "Orders", href: "/admin/orders", icon: ShoppingBag },
+  { name: "Tickets", href: "/admin/tickets", icon: MessageSquare },
   { name: "Wallets", href: "/admin/wallets", icon: Wallet },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
