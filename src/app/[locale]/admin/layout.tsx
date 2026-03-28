@@ -99,7 +99,7 @@ export default function AdminLayout({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
-  const { user } = useUserStore();
+  const { user, clearNotifications } = useUserStore();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -178,9 +178,14 @@ export default function AdminLayout({
           </div>
           
           <div className="flex items-center gap-4 md:gap-6">
-            <button className="relative p-2 text-muted-foreground hover:text-white transition-colors">
+            <button 
+              className="relative p-2 text-muted-foreground hover:text-white transition-colors"
+              onClick={clearNotifications}
+            >
               <Bell className="h-5 w-5" />
-              <span className="absolute top-2 right-2 h-2 w-2 bg-primary rounded-full border-2 border-[#050505]" />
+              {(user?.notifications?.length || 0) > 0 && (
+                <span className="absolute top-2 right-2 h-2 w-2 bg-primary rounded-full border-2 border-[#050505]" />
+              )}
             </button>
             <div className="flex items-center gap-3 border-l border-white/10 pl-4 md:pl-6">
               <div ref={profileRef} className="relative">
