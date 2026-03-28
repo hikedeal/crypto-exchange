@@ -3,7 +3,11 @@
 import { useState, useEffect } from "react";
 import { Link, usePathname, useRouter, routing } from "@/i18n/routing";
 import { GradientButton } from "@/components/ui/gradient-button";
-import { Menu, X, ChevronDown, ChevronRight, Globe } from "lucide-react";
+import { 
+  Menu, X, ChevronDown, ChevronRight, Globe, 
+  Activity, TrendingUp, Clock, Cpu, Users, Repeat,
+  ArrowRight
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCurrencyStore, type Currency } from "@/store/useCurrencyStore";
 import {
@@ -12,7 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import { motion, AnimatePresence } from "framer-motion";
 import { flags, localeNames, currencies } from "@/lib/constants";
 
 export function LandingNavbar() {
@@ -49,12 +53,12 @@ export function LandingNavbar() {
   };
 
   const productLinks = [
-    { title: t("MegaMenu.spot_title"), desc: t("MegaMenu.spot_desc"), href: "/spot" },
-    { title: t("MegaMenu.margin_title"), desc: t("MegaMenu.margin_desc"), href: "/margin" },
-    { title: t("MegaMenu.futures_title"), desc: t("MegaMenu.futures_desc"), href: "/futures" },
-    { title: t("MegaMenu.bot_title"), desc: t("MegaMenu.bot_desc"), href: "/bot" },
-    { title: t("MegaMenu.p2p_title"), desc: t("MegaMenu.p2p_desc"), href: "/p2p" },
-    { title: t("MegaMenu.arbitrage_title"), desc: t("MegaMenu.arbitrage_desc"), href: "/arbitrage" },
+    { title: t("MegaMenu.spot_title"), desc: t("MegaMenu.spot_desc"), href: "/spot", icon: Activity },
+    { title: t("MegaMenu.margin_title"), desc: t("MegaMenu.margin_desc"), href: "/margin", icon: TrendingUp },
+    { title: t("MegaMenu.futures_title"), desc: t("MegaMenu.futures_desc"), href: "/futures", icon: Clock },
+    { title: t("MegaMenu.bot_title"), desc: t("MegaMenu.bot_desc"), href: "/bot", icon: Cpu },
+    { title: t("MegaMenu.p2p_title"), desc: t("MegaMenu.p2p_desc"), href: "/p2p", icon: Users },
+    { title: t("MegaMenu.arbitrage_title"), desc: t("MegaMenu.arbitrage_desc"), href: "/arbitrage", icon: Repeat },
   ];
 
   return (
@@ -147,66 +151,118 @@ export function LandingNavbar() {
           {/* Mobile Hamburger Button */}
           <button 
             className="flex items-center justify-center p-2 text-white hover:bg-white/5 rounded-lg transition-colors lg:hidden"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => setIsMobileMenuOpen(true)}
           >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <Menu className="h-6 w-6" />
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
-      <div 
-        className={`fixed inset-0 top-20 z-[9999] bg-[#0b0f19] lg:hidden transition-all duration-300 ${isMobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
-        style={{ zIndex: 9999 }}
-      >
-        <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8 relative z-[10000] bg-[#0b0f19]">
-          <div className="flex flex-col gap-4">
-            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
-            <div className="flex flex-col gap-3">
-              {productLinks.map((link) => (
+      {/* High-Fidelity Mobile Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] lg:hidden"
+            />
+
+            {/* Drawer Content */}
+            <motion.div 
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 right-0 w-[300px] xs:w-[340px] bg-[#0a0b12] z-[10000] lg:hidden shadow-2xl flex flex-col border-l border-white/5"
+            >
+              {/* Drawer Header */}
+              <div className="h-20 px-6 flex items-center justify-between border-b border-white/5">
+                <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
+                  CryptoP2P
+                </span>
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-white/40 uppercase tracking-widest">{t("Navbar.menu") || "Menu"}</span>
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-lg bg-white/5 text-white hover:bg-white/10 transition-colors"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Drawer Body - Scrollable */}
+              <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-8">
+                {/* Products Section */}
+                <div className="flex flex-col gap-4">
+                  <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">{t("MegaMenu.products")}</h3>
+                  <div className="flex flex-col gap-2">
+                    {productLinks.map((link) => (
+                      <Link 
+                        key={link.href} 
+                        href={link.href as any} 
+                        className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-all"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <div className="p-2.5 rounded-lg bg-white/5 border border-white/5 text-primary group-hover:bg-primary/20 group-hover:border-primary/20 transition-all">
+                          <link.icon className="h-4 w-4" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">{link.title}</span>
+                          <span className="text-[11px] text-white/40 leading-tight mt-0.5">{link.desc}</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Main Navigation Section */}
+                <div className="flex flex-col gap-4">
+                  <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">Navigation</h3>
+                  <div className="flex flex-col gap-1">
+                    {[
+                      { name: t("Navbar.features"), href: "/#features" },
+                      { name: t("Navbar.p2p"), href: "/#p2p" },
+                      { name: t("Navbar.market"), href: "/#market" },
+                    ].map((item) => (
+                      <Link 
+                        key={item.href}
+                        href={item.href as any}
+                        className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 text-sm font-medium text-white/80 hover:text-white transition-all group"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                        <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Drawer Footer - Fixed Bottom */}
+              <div className="p-6 border-t border-white/5 bg-background/50 backdrop-blur-md">
                 <Link 
-                  key={link.href} 
-                  href={link.href as any} 
-                  className="block w-full p-4 rounded-xl bg-neutral-800 border border-white/10"
+                  href="/login" 
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-sm hover:text-primary transition-all group"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <div className="text-base font-bold text-white mb-1">{link.title}</div>
-                  <div className="text-xs text-neutral-400 leading-relaxed">{link.desc}</div>
+                  {t("Navbar.login")}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2 border-t border-white/5 pt-8">
-            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2 mb-2">Navigation</h3>
-            <Link href="/#features" className="text-base font-bold text-white p-3 hover:bg-white/5 rounded-lg transition-colors flex items-center justify-between group" onClick={() => setIsMobileMenuOpen(false)}>
-              {t("Navbar.features")}
-              <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-50 transition-opacity" />
-            </Link>
-            <Link href="/#p2p" className="text-base font-bold text-white p-3 hover:bg-white/5 rounded-lg transition-colors flex items-center justify-between group" onClick={() => setIsMobileMenuOpen(false)}>
-              {t("Navbar.p2p")}
-              <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-50 transition-opacity" />
-            </Link>
-            <Link href="/spot" className="text-base font-bold text-white p-3 hover:bg-white/5 rounded-lg transition-colors flex items-center justify-between group" onClick={() => setIsMobileMenuOpen(false)}>
-              {t("Navbar.market")}
-              <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-50 transition-opacity" />
-            </Link>
-          </div>
-
-          <div className="mt-auto flex flex-col gap-4 pt-8 border-t border-white/5 pb-8">
-            <Link href="/login" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-              <button className="w-full h-12 rounded-xl border border-white/10 text-white font-bold hover:bg-white/5 transition-colors">
-                {t("Navbar.login")}
-              </button>
-            </Link>
-            <Link href="/register" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-              <GradientButton className="w-full h-12 rounded-xl text-white font-bold">
-                {t("Navbar.signup")}
-              </GradientButton>
-            </Link>
-          </div>
-        </div>
-      </div>
+                <Link href="/register" className="block mt-2" onClick={() => setIsMobileMenuOpen(false)}>
+                  <GradientButton className="w-full py-6 rounded-xl text-sm font-bold shadow-lg shadow-primary/10">
+                    {t("Navbar.signup")}
+                  </GradientButton>
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
