@@ -67,7 +67,7 @@ export function LandingNavbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-8">
           <div className="relative group/mega">
             <button className="flex items-center gap-1 text-sm font-medium text-white hover:text-primary transition-colors">
               {t("MegaMenu.products")}
@@ -136,8 +136,8 @@ export function LandingNavbar() {
               </DropdownMenu>
             </div>
 
-            <Link href="/login" className="text-sm font-medium text-white hover:text-primary transition-colors hidden md:block shrink-0">{t("Navbar.login")}</Link>
-            <Link href="/register" className="shrink-0 hidden xs:block">
+            <Link href="/login" className="text-sm font-medium text-white hover:text-primary transition-colors hidden lg:block shrink-0">{t("Navbar.login")}</Link>
+            <Link href="/register" className="shrink-0 hidden xs:block lg:block">
               <GradientButton className="text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 h-8 sm:h-9">
                 {t("Navbar.signup")}
               </GradientButton>
@@ -146,7 +146,7 @@ export function LandingNavbar() {
 
           {/* Mobile Hamburger Button */}
           <button 
-            className="md:hidden flex items-center justify-center p-2 text-white hover:bg-white/5 rounded-lg transition-colors"
+            className="lg:hidden flex items-center justify-center p-2 text-white hover:bg-white/5 rounded-lg transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -155,7 +155,7 @@ export function LandingNavbar() {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div className={`fixed inset-0 top-20 z-40 bg-background/95 backdrop-blur-xl transition-all duration-300 md:hidden ${isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}>
+      <div className={`fixed inset-0 top-20 z-40 bg-neutral-900/98 backdrop-blur-xl transition-all duration-300 lg:hidden ${isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}>
         <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
@@ -164,11 +164,11 @@ export function LandingNavbar() {
                 <Link 
                   key={link.href} 
                   href={link.href as any} 
-                  className="flex flex-col gap-0.5 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                  className="flex flex-col gap-0.5 p-3 rounded-xl hover:bg-white/5 transition-colors opacity-100"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <span className="text-sm font-bold text-white">{link.title}</span>
-                  <span className="text-xs text-muted-foreground">{link.desc}</span>
+                  <span className="text-sm font-bold text-white opacity-100">{link.title}</span>
+                  <span className="text-xs text-muted-foreground opacity-100">{link.desc}</span>
                 </Link>
               ))}
             </div>
