@@ -160,86 +160,94 @@ export function LandingNavbar() {
 
     </header>
 
-    {/* High-Fidelity Mobile Drawer - Moved outside header for full-height coverage */}
+    {/* High-Fidelity Mobile Drawer - Master Fixed Positioning */}
     <AnimatePresence>
       {isMobileMenuOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop - High Z-Index, Solid for overlay effect */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[9998] lg:hidden"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[99998] lg:hidden"
           />
 
-          {/* Drawer Content */}
+          {/* Drawer Content - Opaque Background, Explicit full height */}
           <motion.div 
-            initial={{ x: "100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-y-0 right-0 w-[300px] xs:w-[340px] bg-[#0b0f19] z-[10000] lg:hidden shadow-2xl flex flex-col border-l border-white/10"
-            style={{ height: '100dvh' }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed top-0 bottom-0 right-0 w-[280px] sm:w-[320px] bg-neutral-950 z-[99999] lg:hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col border-l border-white/10"
+            style={{ 
+              backgroundColor: '#0a0b12',
+              height: '100dvh',
+              maxHeight: '100dvh'
+            }}
           >
-            {/* Drawer Header */}
-            <div className="h-20 px-6 flex items-center justify-between border-b border-white/5 bg-[#0b0f19] shrink-0">
+            {/* Drawer Header - Guaranteed Opaque */}
+            <div className="h-20 px-6 flex items-center justify-between border-b border-white/5 bg-[#0a0b12] shrink-0">
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-xl font-bold text-transparent">
                 CryptoP2P
               </span>
               <div className="flex items-center gap-3">
                 <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                  {t("Navbar.menu") !== "Navbar.menu" ? t("Navbar.menu") : "Menu"}
+                  Menu
                 </span>
                 <button 
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 rounded-lg bg-white/5 text-white hover:bg-white/10 transition-colors"
+                  className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
             </div>
 
-            {/* Drawer Body - Scrollable */}
-            <div className="flex-1 overflow-y-auto px-6 py-8 flex flex-col gap-8 bg-[#0b0f19]">
-              {/* Products Section */}
+            {/* Drawer Body - Scrollable Area */}
+            <div className="flex-1 overflow-y-auto px-5 py-6 flex flex-col gap-8 bg-[#0a0b12]">
+              {/* Internal Hardcoded Links to guarantee rendering if translations fail */}
               <div className="flex flex-col gap-4">
-                <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">{t("MegaMenu.products")}</h3>
+                <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">
+                  Products
+                </h3>
                 <div className="flex flex-col gap-2">
-                  {productLinks.map((link) => {
-                    const Icon = link.icon || Activity;
-                    return (
-                      <Link 
-                        key={link.href} 
-                        href={link.href as any} 
-                        className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/10 transition-all border border-transparent hover:border-white/5"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-primary group-hover:bg-primary/20 group-hover:border-primary/20 transition-all shrink-0">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <div className="flex flex-col min-w-0">
-                          <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">
-                            {link.title}
-                          </span>
-                          <span className="text-[11px] text-white/50 leading-tight mt-0.5 line-clamp-2">
-                            {link.desc}
-                          </span>
-                        </div>
-                      </Link>
-                    );
-                  })}
+                  {[
+                    { title: "Spot Trading", href: "/spot", icon: Activity, desc: "Fast & reliable spot exchange" },
+                    { title: "Margin Trading", href: "/margin", icon: TrendingUp, desc: "Leverage with precision" },
+                    { title: "Futures Trading", href: "/futures", icon: Clock, desc: "Professional derivative trading" },
+                    { title: "P2P Marketplace", href: "/p2p", icon: Users, desc: "Direct crypto trading" },
+                  ].map((link) => (
+                    <Link 
+                      key={link.href} 
+                      href={link.href as any} 
+                      className="group flex items-start gap-4 p-3 rounded-xl hover:bg-white/5 transition-all text-white border border-transparent active:bg-white/10"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-primary group-hover:bg-primary/20 transition-all shrink-0">
+                        <link.icon className="h-4 w-4" />
+                      </div>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-sm font-bold text-white group-hover:text-primary transition-colors">
+                          {link.title}
+                        </span>
+                        <span className="text-[11px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+                          {link.desc}
+                        </span>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
               </div>
 
-              {/* Main Navigation */}
+              {/* Navigation Links */}
               <div className="flex flex-col gap-4">
                 <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em] px-1">Discover</h3>
                 <div className="flex flex-col gap-1">
                   {[
-                    { name: t("Navbar.features"), href: "/#features" },
-                    { name: t("Navbar.p2p"), href: "/#p2p" },
-                    { name: t("Navbar.market"), href: "/#market" },
+                    { name: "Features", href: "/#features" },
+                    { name: "Market Overview", href: "/#market" },
+                    { name: "Security Center", href: "/#security" },
                   ].map((item) => (
                     <Link 
                       key={item.href}
@@ -248,7 +256,7 @@ export function LandingNavbar() {
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       {item.name}
-                      <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                      <ArrowRight className="h-3 w-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
                     </Link>
                   ))}
                 </div>
@@ -256,18 +264,18 @@ export function LandingNavbar() {
             </div>
 
             {/* Drawer Footer - Fixed Bottom */}
-            <div className="p-6 border-t border-white/5 bg-[#0b0f19] shrink-0">
+            <div className="p-6 border-t border-white/5 bg-[#0a0b12] shrink-0 mt-auto">
               <Link 
                 href="/login" 
-                className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-sm hover:text-primary transition-all group"
+                className="w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-sm tracking-wide text-center"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {t("Navbar.login")}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                Log In
+                <ArrowRight className="h-4 w-4 text-primary" />
               </Link>
               <Link href="/register" className="block mt-2" onClick={() => setIsMobileMenuOpen(false)}>
-                <GradientButton className="w-full py-6 rounded-xl text-sm font-bold shadow-lg shadow-primary/10">
-                  {t("Navbar.signup")}
+                <GradientButton className="w-full py-5 rounded-xl text-sm font-bold shadow-xl shadow-primary/20">
+                  Join Now
                 </GradientButton>
               </Link>
             </div>
