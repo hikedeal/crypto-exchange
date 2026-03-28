@@ -63,11 +63,6 @@ export function TopNavbar() {
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/5 bg-background/80 px-6 backdrop-blur-xl lg:pl-10">
-      <div className="flex items-center gap-4 lg:hidden">
-        <Button variant="ghost" size="icon" className="text-muted-foreground">
-          <Menu className="h-5 w-5" />
-        </Button>
-      </div>
 
       <div className="hidden flex-1 lg:flex items-center gap-4 max-w-sm">
         <div className="relative w-full text-xs">
