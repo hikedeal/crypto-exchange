@@ -156,12 +156,13 @@ export function LandingNavbar() {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 top-20 z-[999] transition-all duration-300 lg:hidden ${isMobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
-        style={{ backgroundColor: '#0a0b0d', opacity: isMobileMenuOpen ? 1 : 0 }}
+        className={`fixed inset-0 top-20 z-[9999] lg:hidden ${isMobileMenuOpen ? "block" : "hidden"}`}
+        style={{ backgroundColor: 'red', display: isMobileMenuOpen ? 'block' : 'none' }}
       >
-        <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8 relative z-[1000]">
+        <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8 relative z-[10000]">
           <div className="flex flex-col gap-4">
-            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
+            <h2 className="text-white text-4xl font-extrabold bg-blue-600 p-4">DRAWER LIVE RED TEST</h2>
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
             <div className="flex flex-col gap-3">
               {productLinks.map((link) => (
                 <Link 
