@@ -156,15 +156,12 @@ export function LandingNavbar() {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`fixed inset-0 top-20 z-[9999] lg:hidden ${isMobileMenuOpen ? "block" : "hidden"}`}
-        style={{ zIndex: 9999, display: isMobileMenuOpen ? 'block' : 'none' }}
+        className={`fixed inset-0 top-20 z-[9999] bg-[#0b0f19] lg:hidden transition-all duration-300 ${isMobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"}`}
+        style={{ zIndex: 9999 }}
       >
-        <div 
-          className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8 relative"
-          style={{ backgroundColor: '#0b0f19', minHeight: '100%', width: '100%' }}
-        >
+        <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8 relative z-[10000] bg-[#0b0f19]">
           <div className="flex flex-col gap-4">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider px-2 border-b border-white/10 pb-2">{t("MegaMenu.products")}</h3>
+            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
             <div className="flex flex-col gap-3">
               {productLinks.map((link) => (
                 <Link 
