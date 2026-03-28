@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Link, usePathname, useRouter, routing } from "@/i18n/routing";
 import { GradientButton } from "@/components/ui/gradient-button";
-import { ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCurrencyStore, type Currency } from "@/store/useCurrencyStore";
 import {
@@ -22,20 +22,40 @@ export function LandingNavbar() {
   const pathname = usePathname();
   const { currency, setCurrency } = useCurrencyStore();
   const [mounted, setMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isMobileMenuOpen]);
+
   const handleLocaleChange = (newLocale: string) => {
-    // Robust cleanup: remove any of our supported locales from the start of the path
     const cleanPath = pathname.replace(/^\/(en|hi|es|zh|ar|ru)(\/|$)/, '/') || '/';
     router.replace(cleanPath, { locale: newLocale as any });
+    setIsMobileMenuOpen(false);
   };
 
   const handleCurrencyChange = (newCurr: Currency) => {
     setCurrency(newCurr);
+    setIsMobileMenuOpen(false);
   };
+
+  const productLinks = [
+    { title: t("MegaMenu.spot_title"), desc: t("MegaMenu.spot_desc"), href: "/spot" },
+    { title: t("MegaMenu.margin_title"), desc: t("MegaMenu.margin_desc"), href: "/margin" },
+    { title: t("MegaMenu.futures_title"), desc: t("MegaMenu.futures_desc"), href: "/futures" },
+    { title: t("MegaMenu.bot_title"), desc: t("MegaMenu.bot_desc"), href: "/bot" },
+    { title: t("MegaMenu.p2p_title"), desc: t("MegaMenu.p2p_desc"), href: "/p2p" },
+    { title: t("MegaMenu.arbitrage_title"), desc: t("MegaMenu.arbitrage_desc"), href: "/arbitrage" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-background/80 backdrop-blur-md">
@@ -45,8 +65,9 @@ export function LandingNavbar() {
             CryptoP2P
           </Link>
         </div>
+
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          {/* Mega Menu */}
           <div className="relative group/mega">
             <button className="flex items-center gap-1 text-sm font-medium text-white hover:text-primary transition-colors">
               {t("MegaMenu.products")}
@@ -56,34 +77,12 @@ export function LandingNavbar() {
             <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover/mega:opacity-100 group-hover/mega:visible transition-all duration-300 z-50">
               <div className="w-[600px] bg-background/95 border border-white/10 rounded-2xl p-6 shadow-2xl backdrop-blur-xl">
                 <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-                  {/* Column 1 */}
-                  <Link href="/spot" className="group/item flex flex-col gap-1">
-                    <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.spot_title")}</span>
-                    <span className="text-xs text-muted-foreground">{t("MegaMenu.spot_desc")}</span>
-                  </Link>
-                  {/* Column 2 */}
-                  <Link href="/margin" className="group/item flex flex-col gap-1">
-                    <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.margin_title")}</span>
-                    <span className="text-xs text-muted-foreground">{t("MegaMenu.margin_desc")}</span>
-                  </Link>
-                  
-                  <Link href="/futures" className="group/item flex flex-col gap-1">
-                    <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.futures_title")}</span>
-                    <span className="text-xs text-muted-foreground">{t("MegaMenu.futures_desc")}</span>
-                  </Link>
-                  <Link href="/bot" className="group/item flex flex-col gap-1">
-                    <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.bot_title")}</span>
-                    <span className="text-xs text-muted-foreground">{t("MegaMenu.bot_desc")}</span>
-                  </Link>
-                  
-                  <Link href="/p2p" className="group/item flex flex-col gap-1">
-                    <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.p2p_title")}</span>
-                    <span className="text-xs text-muted-foreground">{t("MegaMenu.p2p_desc")}</span>
-                  </Link>
-                  <Link href="/arbitrage" className="group/item flex flex-col gap-1">
-                    <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{t("MegaMenu.arbitrage_title")}</span>
-                    <span className="text-xs text-muted-foreground">{t("MegaMenu.arbitrage_desc")}</span>
-                  </Link>
+                  {productLinks.map((link) => (
+                    <Link key={link.href} href={link.href as any} className="group/item flex flex-col gap-1">
+                      <span className="text-sm font-bold text-white group-hover/item:text-primary transition-colors">{link.title}</span>
+                      <span className="text-xs text-muted-foreground">{link.desc}</span>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
@@ -93,56 +92,104 @@ export function LandingNavbar() {
           <Link href="/#p2p" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.p2p")}</Link>
           <Link href="/#market" className="text-sm font-medium text-muted-foreground hover:text-white transition-colors">{t("Navbar.market")}</Link>
         </nav>
-        <div className="flex items-center gap-1.5 sm:gap-4 overflow-hidden">
-          <div className="flex items-center gap-1 md:gap-2 shrink-0">
-            {/* Language Switcher */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="h-8 gap-1 md:gap-2 px-1.5 md:px-2 text-muted-foreground hover:text-white hover:bg-white/5 border border-white/5 rounded-lg transition-all flex items-center bg-transparent shrink-0">
-                <span className="text-sm md:text-base leading-none">{flags[locale]}</span>
-                <span className="text-[10px] md:text-xs font-medium uppercase hidden xs:inline">{locale}</span>
-                <ChevronDown className="h-3 w-3 opacity-50" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-40 bg-background/95 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl z-[100]">
-                {routing.locales.map((loc: string) => (
-                  <DropdownMenuItem
-                    key={loc}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
-                    onClick={() => handleLocaleChange(loc)}
-                  >
-                    <span className="text-lg">{flags[loc]}</span>
-                    <span>{localeNames[loc]}</span>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
 
-            {/* Currency Switcher */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="h-8 gap-1 md:gap-2 px-1.5 md:px-2 text-muted-foreground hover:text-white hover:bg-white/5 border border-white/5 rounded-lg transition-all flex items-center bg-transparent shrink-0">
-                <span className="text-[10px] md:text-xs font-bold">{currency}</span>
-                <ChevronDown className="h-3 w-3 opacity-50" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-32 bg-background/95 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl z-[100]">
-                {currencies.map((curr) => (
-                  <DropdownMenuItem
-                    key={curr}
-                    className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
-                    onClick={() => handleCurrencyChange(curr)}
-                  >
-                    <span>{curr}</span>
-                    {currency === curr && <div className="h-1 w-1 rounded-full bg-primary" />}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-4">
+            <div className="flex items-center gap-1 md:gap-2 shrink-0">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="h-8 gap-1 md:gap-2 px-1.5 md:px-2 text-muted-foreground hover:text-white hover:bg-white/5 border border-white/5 rounded-lg transition-all flex items-center bg-transparent shrink-0">
+                  <span className="text-sm md:text-base leading-none">{flags[locale]}</span>
+                  <span className="text-[10px] md:text-xs font-medium uppercase hidden xs:inline">{locale}</span>
+                  <ChevronDown className="h-3 w-3 opacity-50" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-40 bg-background/95 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl z-[100]">
+                  {routing.locales.map((loc: string) => (
+                    <DropdownMenuItem
+                      key={loc}
+                      className="flex items-center gap-3 rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
+                      onClick={() => handleLocaleChange(loc)}
+                    >
+                      <span className="text-lg">{flags[loc]}</span>
+                      <span>{localeNames[loc]}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger className="h-8 gap-1 md:gap-2 px-1.5 md:px-2 text-muted-foreground hover:text-white hover:bg-white/5 border border-white/5 rounded-lg transition-all flex items-center bg-transparent shrink-0">
+                  <span className="text-[10px] md:text-xs font-bold">{currency}</span>
+                  <ChevronDown className="h-3 w-3 opacity-50" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-32 bg-background/95 border-white/10 backdrop-blur-xl rounded-xl p-1 shadow-2xl z-[100]">
+                  {currencies.map((curr) => (
+                    <DropdownMenuItem
+                      key={curr}
+                      className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium focus:bg-primary/20 focus:text-primary transition-colors cursor-pointer text-white"
+                      onClick={() => handleCurrencyChange(curr)}
+                    >
+                      <span>{curr}</span>
+                      {currency === curr && <div className="h-1 w-1 rounded-full bg-primary" />}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            <Link href="/login" className="text-sm font-medium text-white hover:text-primary transition-colors hidden md:block shrink-0">{t("Navbar.login")}</Link>
+            <Link href="/register" className="shrink-0 hidden xs:block">
+              <GradientButton className="text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 h-8 sm:h-9">
+                {t("Navbar.signup")}
+              </GradientButton>
+            </Link>
           </div>
 
-          <Link href="/login" className="text-sm font-medium text-white hover:text-primary transition-colors hidden md:block shrink-0">{t("Navbar.login")}</Link>
-          <Link href="/register" className="shrink-0">
-            <GradientButton className="text-[10px] sm:text-xs md:text-sm px-3 sm:px-4 md:px-6 h-8 sm:h-9">
-              {t("Navbar.signup")}
-            </GradientButton>
-          </Link>
+          {/* Mobile Hamburger Button */}
+          <button 
+            className="md:hidden flex items-center justify-center p-2 text-white hover:bg-white/5 rounded-lg transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`fixed inset-0 top-20 z-40 bg-background/95 backdrop-blur-xl transition-all duration-300 md:hidden ${isMobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"}`}>
+        <div className="h-full overflow-y-auto px-6 py-8 flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider px-2">{t("MegaMenu.products")}</h3>
+            <div className="grid grid-cols-1 gap-2">
+              {productLinks.map((link) => (
+                <Link 
+                  key={link.href} 
+                  href={link.href as any} 
+                  className="flex flex-col gap-0.5 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="text-sm font-bold text-white">{link.title}</span>
+                  <span className="text-xs text-muted-foreground">{link.desc}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 border-t border-white/5 pt-8">
+            <Link href="/#features" className="text-lg font-bold text-white p-2" onClick={() => setIsMobileMenuOpen(false)}>{t("Navbar.features")}</Link>
+            <Link href="/#p2p" className="text-lg font-bold text-white p-2" onClick={() => setIsMobileMenuOpen(false)}>{t("Navbar.p2p")}</Link>
+            <Link href="/#market" className="text-lg font-bold text-white p-2" onClick={() => setIsMobileMenuOpen(false)}>{t("Navbar.market")}</Link>
+          </div>
+
+          <div className="mt-auto flex flex-col gap-4 pt-8 border-t border-white/5">
+            <Link href="/login" className="w-full h-12 flex items-center justify-center text-sm font-bold text-white border border-white/10 rounded-xl hover:bg-white/5 transition-colors" onClick={() => setIsMobileMenuOpen(false)}>
+              {t("Navbar.login")}
+            </Link>
+            <Link href="/register" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+              <GradientButton className="w-full h-12 text-sm">
+                {t("Navbar.signup")}
+              </GradientButton>
+            </Link>
+          </div>
         </div>
       </div>
     </header>
