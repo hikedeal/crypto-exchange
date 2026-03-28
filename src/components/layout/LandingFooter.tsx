@@ -39,12 +39,14 @@ export function LandingFooter() {
           <p className="text-sm text-muted-foreground pr-4 transition-opacity hover:opacity-100 opacity-80">{t("Footer.desc")}</p>
         </div>
         <div>
-          <h4 className="font-semibold text-white mb-4">{t("Footer.products")}</h4>
+          <h4 className="font-semibold text-white mb-4">{t("MegaMenu.products")}</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link href="/spot" className="hover:text-primary transition-colors">{t("Footer.spot")}</Link></li>
-            <li><Link href="/bot" className="hover:text-primary transition-colors">{t("Footer.earn")}</Link></li>
-            <li><Link href="/margin" className="hover:text-primary transition-colors">{t("Footer.institutional")}</Link></li>
-            <li><Link href="/futures" className="hover:text-primary transition-colors">{t("Footer.launchpad")}</Link></li>
+            <li><Link href="/spot" className="hover:text-primary transition-colors">{t("MegaMenu.spot_title")}</Link></li>
+            <li><Link href="/margin" className="hover:text-primary transition-colors">{t("MegaMenu.margin_title")}</Link></li>
+            <li><Link href="/futures" className="hover:text-primary transition-colors">{t("MegaMenu.futures_title")}</Link></li>
+            <li><Link href="/bot" className="hover:text-primary transition-colors">{t("MegaMenu.bot_title")}</Link></li>
+            <li><Link href="/p2p" className="hover:text-primary transition-colors">{t("MegaMenu.p2p_title")}</Link></li>
+            <li><Link href="/arbitrage" className="hover:text-primary transition-colors">{t("MegaMenu.arbitrage_title")}</Link></li>
           </ul>
         </div>
         <div>
@@ -58,17 +60,17 @@ export function LandingFooter() {
         <div>
           <h4 className="font-semibold text-white mb-4">{t("Footer.support")}</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.help")}</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.ticket")}</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.fees")}</Link></li>
+            <li><Link href="/help" className="hover:text-primary transition-colors">{t("Footer.help")}</Link></li>
+            <li><Link href="/tickets" className="hover:text-primary transition-colors">{t("Footer.ticket")}</Link></li>
+            <li><Link href="/fees" className="hover:text-primary transition-colors">{t("Footer.fees")}</Link></li>
           </ul>
         </div>
         <div>
           <h4 className="font-semibold text-white mb-4">{t("Footer.legal")}</h4>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.terms")}</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.privacy")}</Link></li>
-            <li><Link href="#" className="hover:text-primary transition-colors">{t("Footer.kyc")}</Link></li>
+            <li><Link href="/terms" className="hover:text-primary transition-colors">{t("Footer.terms")}</Link></li>
+            <li><Link href="/privacy" className="hover:text-primary transition-colors">{t("Footer.privacy")}</Link></li>
+            <li><Link href="/kyc" className="hover:text-primary transition-colors">{t("Footer.kyc")}</Link></li>
           </ul>
         </div>
       </div>
