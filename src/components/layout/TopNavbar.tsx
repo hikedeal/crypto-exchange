@@ -151,8 +151,8 @@ export function TopNavbar() {
 
           {user && (
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="flex items-center gap-3 pl-2 sm:border-l border-white/5 cursor-pointer group">
+              <DropdownMenuTrigger>
+                <div className="flex items-center gap-3 pl-2 sm:border-l border-white/5 cursor-pointer group outline-none">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 font-bold text-white shadow-lg shadow-purple-500/20 text-xs ring-2 ring-transparent group-hover:ring-primary/50 transition-all">
                     {user.name.charAt(0)}
                   </div>
