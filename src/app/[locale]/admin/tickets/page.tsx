@@ -6,8 +6,8 @@ import { Search, Filter, MessageSquare, CheckCircle, AlertCircle } from "lucide-
 import { useTicketStore, TicketStatus } from "@/store/useTicketStore";
 
 export default function AdminTicketsPage() {
-  const tickets = useTicketStore((state: any) => state.tickets);
-  const toggleStoreStatus = useTicketStore((state: any) => state.toggleStatus);
+  const tickets = useTicketStore((state) => state.tickets);
+  const toggleStoreStatus = useTicketStore((state) => state.toggleStatus);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -16,7 +16,7 @@ export default function AdminTicketsPage() {
     toggleStoreStatus(id);
   };
 
-  const filteredTickets = tickets.filter(ticket => {
+  const filteredTickets = tickets.filter((ticket: any) => {
     const matchesSearch = 
       ticket.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
       ticket.email.toLowerCase().includes(searchQuery.toLowerCase()) ||

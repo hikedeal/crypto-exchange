@@ -13,7 +13,7 @@ export default function SupportTicketPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ticketId, setTicketId] = useState("");
-  const addTicket = useTicketStore((state: any) => state.addTicket);
+  const addTicket = useTicketStore((state) => state.addTicket);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
