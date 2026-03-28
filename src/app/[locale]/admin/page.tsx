@@ -77,17 +77,17 @@ export default function AdminDashboard() {
     time: new Date(o.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   }));
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 md:space-y-8 max-w-7xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pl-12 lg:pl-0 pt-2 lg:pt-0">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Dashboard Overview</h1>
-          <p className="text-muted-foreground mt-1">Real-time platform performance and core metrics.</p>
+          <h1 className="text-xl sm:text-3xl font-bold text-white tracking-tight">Dashboard Overview</h1>
+          <p className="text-muted-foreground mt-1 text-sm">Real-time platform performance and core metrics.</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-medium hover:bg-white/10 transition-colors">
+          <button className="px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-xs sm:text-sm font-medium hover:bg-white/10 transition-colors">
             Download Report
           </button>
-          <button className="px-4 py-2 rounded-xl bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
+          <button className="px-3 py-2 rounded-xl bg-primary text-white text-xs sm:text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
             Export Data
           </button>
         </div>

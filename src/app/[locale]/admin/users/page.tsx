@@ -43,13 +43,13 @@ export default function UsersManagement() {
   );
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 md:space-y-8 max-w-7xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pl-12 lg:pl-0 pt-2 lg:pt-0">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">User Management</h1>
-          <p className="text-muted-foreground mt-1">Monitor and manage all platform participants.</p>
+          <h1 className="text-xl sm:text-3xl font-bold text-white tracking-tight">User Management</h1>
+          <p className="text-muted-foreground mt-1 text-sm">Monitor and manage all platform participants.</p>
         </div>
-        <button className="px-6 py-3 bg-primary text-white text-sm font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity flex items-center gap-2">
+        <button className="px-4 py-2.5 bg-primary text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity flex items-center gap-2 self-start sm:self-auto">
           <Mail className="h-4 w-4" />
           Broadcast Email
         </button>
@@ -82,8 +82,8 @@ export default function UsersManagement() {
           </div>
         </div>
 
-        {/* Users Table */}
-        <div className="overflow-x-auto">
+        {/* Desktop Table - hidden on mobile */}
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-white/5 bg-white/[0.02]">
@@ -119,31 +119,17 @@ export default function UsersManagement() {
                       {user.status}
                     </span>
                   </td>
-                  <td className="px-6 py-5 text-sm font-medium text-white">
-                    Level {user.level}
-                  </td>
-                  <td className="px-6 py-5 text-sm font-bold text-emerald-400">
-                    {user.balance}
-                  </td>
-                  <td className="px-6 py-5 text-xs text-muted-foreground">
-                    {user.joined}
-                  </td>
+                  <td className="px-6 py-5 text-sm font-medium text-white">Level {user.level}</td>
+                  <td className="px-6 py-5 text-sm font-bold text-emerald-400">{user.balance}</td>
+                  <td className="px-6 py-5 text-xs text-muted-foreground">{user.joined}</td>
                   <td className="px-6 py-5 text-right">
                     <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       {user.status === "Active" ? (
-                        <button 
-                          onClick={() => updateUserStatus(user.id, "Banned")}
-                          className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors" 
-                          title="Ban User"
-                        >
+                        <button onClick={() => updateUserStatus(user.id, "Banned")} className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors" title="Ban User">
                           <UserMinus className="h-4 w-4" />
                         </button>
                       ) : (
-                        <button 
-                          onClick={() => updateUserStatus(user.id, "Active")}
-                          className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors" 
-                          title="Activate User"
-                        >
+                        <button onClick={() => updateUserStatus(user.id, "Active")} className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors" title="Activate User">
                           <UserCheck className="h-4 w-4" />
                         </button>
                       )}
@@ -156,6 +142,46 @@ export default function UsersManagement() {
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Card View - shown only on mobile */}
+        <div className="md:hidden divide-y divide-white/5">
+          {filteredUsers.map((user) => (
+            <div key={user.id} className="p-4 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-600/20 border border-white/10 flex items-center justify-center text-primary font-bold shrink-0">
+                  {user.name.charAt(0)}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-white leading-none mb-1 truncate">{user.name}</p>
+                  <p className="text-[11px] text-muted-foreground truncate">{user.email}</p>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <span className={cn(
+                      "text-[9px] font-bold uppercase tracking-tighter px-2 py-0.5 rounded-full",
+                      user.status === "Active" ? "bg-emerald-500/10 text-emerald-400" :
+                      user.status === "Banned" ? "bg-red-500/10 text-red-400" :
+                      "bg-yellow-500/10 text-yellow-400"
+                    )}>{user.status}</span>
+                    <span className="text-[10px] text-emerald-400 font-bold">{user.balance}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                {user.status === "Active" ? (
+                  <button onClick={() => updateUserStatus(user.id, "Banned")} className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors">
+                    <UserMinus className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <button onClick={() => updateUserStatus(user.id, "Active")} className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-colors">
+                    <UserCheck className="h-4 w-4" />
+                  </button>
+                )}
+                <button className="p-2 rounded-lg bg-white/5 text-muted-foreground">
+                  <MoreHorizontal className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Pagination */}
